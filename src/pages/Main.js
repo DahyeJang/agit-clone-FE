@@ -1,7 +1,12 @@
 import React from "react";
+import styled from "styled-components";
 
 const Main = () => {
-  return <div>안녕하세요! 메인 잘 보이나요??</div>;
+  return <StDiv>안녕하세요. 시범입니다.</StDiv>;
 };
+
+const StDiv = styled.div`
+  color: var(--color-point-blue);
+`;
 
 export default Main;
