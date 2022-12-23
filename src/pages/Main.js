@@ -32,14 +32,24 @@ const Main = () => {
             </Button>
           </div>
         </StInvite>
-        <StAgitList2>
+        <StAgitList>
           <StSubject>내 아지트 목록</StSubject>
           <Stlist>
             <li>아지트1</li>
             <li>아지트2</li>
             <li>아지트3</li>
           </Stlist>
-        </StAgitList2>
+        </StAgitList>
+        <StAgitList>
+          <StSubject>아지트 멤버 목록</StSubject>
+          <Stlist>
+            <li>멤버1</li>
+            <li>멤버2</li>
+            <li>멤버3</li>
+            <li>멤버4</li>
+            <li>멤버5</li>
+          </Stlist>
+        </StAgitList>
       </StLeft>
       <StRight>들리니?</StRight>
     </>
@@ -101,11 +111,14 @@ const StlistFrame = styled.div`
   border-bottom: 1px solid #e9e9e9;
 `;
 
-const StAgitList2 = styled.div`
+const StAgitList = styled.div`
   margin-top: 10px;
-  border: 1px solid #dcdfe4;
-  /* border-radius: 2px;
-  display: flex; */
+  //border: 1px solid #dcdfe4;
+  border-bottom: 1px solid #e9e9e9;
+  border-radius: 2px;
+  padding: 10px 10px 22px 24px;
+
+  /* display: flex; */
   //justify-content: center;
   //align-items: flex-start;
   //align-content: center;
@@ -116,16 +129,15 @@ const StAgitList2 = styled.div`
 `;
 
 const StSubject = styled.p`
-  padding-left: 24px;
   color: #222;
   font-weight: 700;
-  margin-top: 20px;
 `;
 
-const Stlist = styled.li`
+const Stlist = styled.ul`
   height: 25px;
   line-height: 26px;
   color: #808080;
+  display: contents;
 `;
 
 export default Main;
