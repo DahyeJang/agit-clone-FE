@@ -13,19 +13,22 @@ const GlobalStyle = createGlobalStyle`
 
 * {
   font-family: 'Noto Sans KR', sans-serif;
+  list-style:none;
 }
 
 
 body {
   width: 100vw;
   height: 100vh;
-  box-sizing: border-box;
+  //box-sizing: border-box;
   padding: 69px 0 0 0;
   margin: 0;
   text-decoration: none;
   outline : none;
   background-color: var(--color-light-gray);
+
 }
+
 `;
 
 export default GlobalStyle;

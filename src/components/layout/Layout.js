@@ -27,5 +27,4 @@ const StLayout = styled.div`
   width: 990px;
   margin: 101px auto 0;
   padding: 0 15px;
-  background-color: aliceblue;
 `;
