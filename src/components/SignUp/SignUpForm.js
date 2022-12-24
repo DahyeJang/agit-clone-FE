@@ -1,3 +1,103 @@
+import React from "react";
+import { useNavigate } from "react-router-dom";
+import styled from "styled-components";
+
+const SignUpForm = () =>{
+
+  const navigate = useNavigate();
+
+  const signUpButton = () => {
+    navigate("/login")
+  }
+  return (
+    <div>
+      <Login>아지트 회원가입</Login>
+      <StDiv>
+       <IdInput placeholder="아이디를 입력해주세요."></IdInput>
+       <OverlapBtn>중복체크</OverlapBtn>
+    </StDiv>
+    <StDiv>
+    <StInput placeholder="닉네임을 입력해주세요."></StInput>
+    </StDiv>
+    <StDiv>
+    <StInput placeholder="비밀번호를 입력해주세요."></StInput>
+    </StDiv>
+    <StDiv>
+    <StInput placeholder="비밀번호를 확인해주세요."></StInput>
+    </StDiv>
+    <StDiv>
+      <CreateBtn onClick={signUpButton}>회원가입</CreateBtn>
+    </StDiv>
+    </div>
+  )
+}
+
+export default SignUpForm;
+
+const Login = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  margin-bottom: 20px;
+  font-size: 35px;
+  color: black;
+`
+
+const StDiv = styled.div`
+  margin-bottom: 10px;
+`
+
+const StInput = styled.input`
+  width: 482px;
+  height: 60px;
+  padding: 0px 0px 0px 20px;
+  font-size: medium;
+  border: 1px solid #e2e2e2;
+`
+const IdInput = styled.input`
+  width: 422px;
+  height: 60px;
+  padding: 0px 0px 0px 20px;
+  font-size: medium;
+  border: 1px solid #e2e2e2;
+`
+
+const CreateBtn = styled.button`
+  color: white;
+  width: 504px;
+  height: 60px;
+  font-size: medium;
+  border: 1px solid var(--color-point-blue);
+  background-color: var(--color-point-blue);
+
+  &:hover,
+  &:active {
+    color: white;
+    background: #5a86dd;
+    border-color: #5a86dd;
+  }
+  &:focus {
+    outline: none;
+  }
+`
+
+const OverlapBtn = styled.button`
+  height: 61px;
+  color: white;
+  border: 1px solid var(--color-point-blue);
+  background-color: var(--color-point-blue);
+
+  &:hover,
+  &:active {
+    color: white;
+    background: #5a86dd;
+    border-color: #5a86dd;
+  }
+  &:focus {
+    outline: none;
+  }
+`
 // import React, { useEffect, useState } from "react";
 // import styled from "styled-components";
 // import Button from "../elem/Button";
