@@ -21,7 +21,7 @@ body {
   width: 100vw;
   height: 100vh;
   //box-sizing: border-box;
-  padding: 69px 0 0 0;
+  padding: 0;
   margin: 0;
   text-decoration: none;
   outline : none;

@@ -24,7 +24,7 @@ const Container = styled.div`
 `;
 
 const StLayout = styled.div`
-  width: 990px;
+  width: 1020px;
   margin: 101px auto 0;
   padding: 0 15px;
 `;
