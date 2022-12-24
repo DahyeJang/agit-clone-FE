@@ -37,4 +37,14 @@ const StButton = styled.button`
   font-family: ${({ fontFamily }) => fontFamily};
   width: ${({ width }) => width || "80px"};
   height: ${({ height }) => height || "32px"};
+  &:disabled {
+    background-color: ${({ backgroundColor }) =>
+      backgroundColor || "rgba(88, 132, 224, 0.7)"};
+    color: ${({ color }) => color || "#fff"};
+  }
+  &:active {
+    background-color: ${({ backgroundColor }) =>
+      backgroundColor || "var(--color-point-blue)"};
+    color: ${({ color }) => color || "#fff"};
+  }
 `;
