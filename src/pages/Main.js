@@ -4,6 +4,7 @@ import Button from "../components/elem/Button";
 import Profile from "../components/Main/Profile";
 import PostForm from "../components/Main/PostForm";
 import Invite from "../components/Main/Invite";
+import PostList from "../components/Main/PostList";
 
 const Main = () => {
   return (
@@ -54,6 +55,7 @@ const Main = () => {
         </StheaderImg>
         <PostForm />
         <UpdateP>업데이트순</UpdateP>
+        <PostList />
       </StRight>
     </>
   );
