@@ -22,3 +22,4 @@ const StDiv = styled.div`
   justify-content: center;
   flex-direction: column;
 `;
+

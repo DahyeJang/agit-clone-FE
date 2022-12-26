@@ -4,6 +4,8 @@ import Button from "../components/elem/Button";
 import Profile from "../components/Main/Profile";
 import PostForm from "../components/Main/PostForm";
 import Invite from "../components/Main/Invite";
+import PostList from "../components/Main/PostList";
+//import { AiOutlinePlus } from "react-icons/ai";
 
 const Main = () => {
   return (
@@ -15,7 +17,11 @@ const Main = () => {
           width="100%"
           backgroundColor="var(--color-point-blue)"
           color="#fff"
+          // display="flex"
+          // justifyContent="space-around"
+          // gap="10px"
         >
+          {/* <AiOutlinePlus /> */}
           새로운 아지트 만들기
         </Button>
         <Invite />
@@ -54,6 +60,7 @@ const Main = () => {
         </StheaderImg>
         <PostForm />
         <UpdateP>업데이트순</UpdateP>
+        <PostList />
       </StRight>
     </>
   );

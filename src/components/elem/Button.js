@@ -17,6 +17,10 @@ const Button = (props) => {
       fontFamily={props.fontFamily}
       padding={props.padding}
       height={props.height}
+      display={props.display}
+      justifyContent={props.justifyContent}
+      paddingLeft={props.paddingLeft}
+      gap={props.gap}
     >
       {props.children}
     </StButton>
