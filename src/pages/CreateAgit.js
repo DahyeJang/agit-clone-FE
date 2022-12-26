@@ -12,8 +12,8 @@ const CreateAgit = () => {
 
 const StDiv = styled.div`
   color: var(--color-point-blue);
-  width: 1200px;
-  height: 700px;
+  width: 1000px;
+  height: 600px;
   margin: auto;
   display: flex;
   align-items: center;
