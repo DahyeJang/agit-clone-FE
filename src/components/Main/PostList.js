@@ -4,6 +4,7 @@ import styled from "styled-components";
 import basicImg from "../../img/basicImg.png";
 import { BsHandThumbsUp, BsHandThumbsDown } from "react-icons/bs";
 import { AiOutlineEllipsis } from "react-icons/ai";
+import Button from "../elem/Button";
 const CreateAgitForm = () => {
   const navigate = useNavigate();
 
@@ -14,7 +15,7 @@ const CreateAgitForm = () => {
   return (
     <div>
       <MainDiv>
-        <HeaderDiv>아지트 명</HeaderDiv>
+        {/* <HeaderDiv>아지트 명</HeaderDiv> */}
         <SuvDiv>
           <Photo src={basicImg} />
           <InDiv>
@@ -24,20 +25,34 @@ const CreateAgitForm = () => {
         </SuvDiv>
         <Content>내용이 들어갑니다.</Content>
         <BtnDiv>
-          <MsgBtn>
-            <span>댓글</span>
-            <Num>1</Num>
-          </MsgBtn>
-          <LikeBtn type="button">
-            <BsHandThumbsUp />
-          </LikeBtn>
-          <HateBtn type="button">
-            <BsHandThumbsDown />
-          </HateBtn>
+          <div>
+            <MsgBtn>
+              <span>댓글</span>
+              <Num>1</Num>
+            </MsgBtn>
+            <LikeBtn type="button">
+              <BsHandThumbsUp />
+            </LikeBtn>
+            <HateBtn type="button">
+              <BsHandThumbsDown />
+            </HateBtn>
+          </div>
           <EtcBtn type="button">
             <AiOutlineEllipsis />
           </EtcBtn>
         </BtnDiv>
+        <PostInput placeholder="댓글을 입력해주세요."></PostInput>
+        <FormButton>
+          <Button>취소</Button>
+          <Button
+            borderColor="rgba(88, 132, 224, 0.2)"
+            backgroundColor="rgba(88, 132, 224, 0.7)"
+            color="white"
+            //disabled={!isActive}
+          >
+            작성하기
+          </Button>
+        </FormButton>
       </MainDiv>
       <MMainDiv>
         <SuvDiv>
@@ -59,25 +74,19 @@ const CreateAgitForm = () => {
 export default CreateAgitForm;
 
 const MainDiv = styled.div`
-  height: 222px;
+  //height: 222px;
   border: 1px solid #e2e2e2;
-  padding: 0px 20px 20px;
+  padding: 0px 20px 30px;
   background-color: #fff;
   margin-top: 15px;
+  display: inline-block;
 `;
 
 const MMainDiv = styled.div`
-  height: 198px;
+  //height: 198px;
   border: 1px solid #e2e2e2;
-  padding: 12px 20px 20px;
+  padding: 12px 20px 40px;
   background-color: #fff;
-`;
-
-const HeaderDiv = styled.div`
-  color: #333333;
-  font-size: medium;
-  padding: 20px 0px 14px;
-  border-bottom: 1px solid #e2e2e2;
 `;
 
 const Photo = styled.img`
@@ -151,8 +160,8 @@ const Content = styled.div`
 `;
 
 const CContent = styled.div`
-  width: 678px;
-  padding-top: 10px;
+  //width: 678px;
+  //padding-top: 10px;
   padding-left: 60px;
   margin-bottom: 0;
   font-size: 13px;
@@ -162,12 +171,14 @@ const CContent = styled.div`
 `;
 
 const BtnDiv = styled.div`
-  width: 720px;
+  //width: 720px;
   height: 24px;
-  position: relative;
-  clear: both;
-  padding-top: 25px;
+  display: flex;
+  //position: relative;
+  //clear: both;
+  margin-top: 25px;
   padding-left: 10px;
+  justify-content: space-between;
 `;
 
 const MsgBtn = styled.span`
@@ -191,6 +202,7 @@ const Num = styled.span`
 
 const LikeBtn = styled.button`
   background-color: white;
+  margin-right: 10px;
   color: #5c5c5c;
   margin-top: 0.3px;
   border: 1px solid #e0e0e0;
@@ -203,7 +215,7 @@ const HateBtn = styled.button`
   background-color: white;
   color: #5c5c5c;
   margin-top: 0.3px;
-  margin-left: 5px;
+  //margin-left: 5px;
   border: 1px solid #e0e0e0;
   border-radius: 2px;
   width: 26px;
@@ -214,18 +226,42 @@ const EtcBtn = styled.button`
   background-color: white;
   color: #5c5c5c;
   margin-top: 0.3px;
-  margin-left: 575px;
+  //margin-left: 575px;
   border: 1px solid #e0e0e0;
   border-radius: 2px;
   width: 26px;
   height: 23px;
 `;
 
+const PostInput = styled.input`
+  width: 687px;
+  margin: 20px 0px 10px 10px;
+  //padding-right: -10px;
+  //margin-bottom: 30px;
+  height: 27px;
+  color: #333333;
+  //padding: 0px 0px 0px 15px;
+  //margin-left: 50px;
+  border: 1px solid #e0e0e0;
+`;
+
 const CmtInput = styled.input`
   width: 610px;
-  height: 22px;
+  height: 27px;
   color: #333333;
   padding: 0px 0px 0px 15px;
   margin-left: 50px;
   border: 1px solid #e0e0e0;
+`;
+
+const FormButton = styled.div`
+  position: relative;
+  height: 28px;
+  padding-top: 10px;
+  float: right;
+  Button {
+    &:first-child {
+      margin-right: 5px;
+    }
+  }
 `;
