@@ -3,11 +3,15 @@ import styled from "styled-components";
 import Button from "../elem/Button";
 
 const PostForm = () => {
-  const [isActive, setIsActive] = useState(false);
+  const [text, enableButton] = useState("");
+  const [disabled, setDisabled] = useState(false);
 
   const onChangeInputHandler = (e) => {
-    setIsActive(true);
+    enableButton(e.target.value);
+    setDisabled(true);
   };
+
+  console.log(text);
 
   return (
     <PostForm2>
@@ -15,14 +19,17 @@ const PostForm = () => {
         <Textarea
           placeholder={"Cmd+Enter를 누르면 글이 등록됩니다."}
           onChange={onChangeInputHandler}
+          type="text"
+          value={text}
         ></Textarea>
         <FormButton>
           <Button>취소</Button>
           <Button
             borderColor="rgba(88, 132, 224, 0.2)"
-            backgroundColor="rgba(88, 132, 224, 0.7)"
+            //backgroundColor="var(--color-point-blue)"
             color="white"
-            //disabled={!isActive}
+            type="submit"
+            disabled={!disabled}
           >
             작성하기
           </Button>

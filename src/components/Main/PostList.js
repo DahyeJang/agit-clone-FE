@@ -4,6 +4,7 @@ import styled from "styled-components";
 import basicImg from "../../img/basicImg.png";
 import { BsHandThumbsUp, BsHandThumbsDown } from "react-icons/bs";
 import { AiOutlineEllipsis } from "react-icons/ai";
+import Button from "../elem/Button";
 const CreateAgitForm = () => {
   const navigate = useNavigate();
 
@@ -40,7 +41,18 @@ const CreateAgitForm = () => {
             <AiOutlineEllipsis />
           </EtcBtn>
         </BtnDiv>
-        <input></input>
+        <PostInput placeholder="댓글을 입력해주세요."></PostInput>
+        <FormButton>
+          <Button>취소</Button>
+          <Button
+            borderColor="rgba(88, 132, 224, 0.2)"
+            backgroundColor="rgba(88, 132, 224, 0.7)"
+            color="white"
+            //disabled={!isActive}
+          >
+            작성하기
+          </Button>
+        </FormButton>
       </MainDiv>
       <MMainDiv>
         <SuvDiv>
@@ -64,15 +76,16 @@ export default CreateAgitForm;
 const MainDiv = styled.div`
   //height: 222px;
   border: 1px solid #e2e2e2;
-  padding: 0px 20px 20px;
+  padding: 0px 20px 30px;
   background-color: #fff;
   margin-top: 15px;
+  display: inline-block;
 `;
 
 const MMainDiv = styled.div`
-  height: 198px;
+  //height: 198px;
   border: 1px solid #e2e2e2;
-  padding: 12px 20px 20px;
+  padding: 12px 20px 40px;
   background-color: #fff;
 `;
 
@@ -147,8 +160,8 @@ const Content = styled.div`
 `;
 
 const CContent = styled.div`
-  width: 678px;
-  padding-top: 10px;
+  //width: 678px;
+  //padding-top: 10px;
   padding-left: 60px;
   margin-bottom: 0;
   font-size: 13px;
@@ -220,11 +233,35 @@ const EtcBtn = styled.button`
   height: 23px;
 `;
 
+const PostInput = styled.input`
+  width: 687px;
+  margin: 20px 0px 10px 10px;
+  //padding-right: -10px;
+  //margin-bottom: 30px;
+  height: 27px;
+  color: #333333;
+  //padding: 0px 0px 0px 15px;
+  //margin-left: 50px;
+  border: 1px solid #e0e0e0;
+`;
+
 const CmtInput = styled.input`
   width: 610px;
-  height: 22px;
+  height: 27px;
   color: #333333;
   padding: 0px 0px 0px 15px;
   margin-left: 50px;
   border: 1px solid #e0e0e0;
+`;
+
+const FormButton = styled.div`
+  position: relative;
+  height: 28px;
+  padding-top: 10px;
+  float: right;
+  Button {
+    &:first-child {
+      margin-right: 5px;
+    }
+  }
 `;
