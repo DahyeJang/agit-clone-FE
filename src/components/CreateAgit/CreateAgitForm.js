@@ -20,47 +20,6 @@ const CreateAgitForm = () => {
       <StDiv>
         <CreateBtn onClick={createAgitBtn}>생성하기</CreateBtn>
       </StDiv>
-      <div>-----------------------</div>
-      <MainDiv>
-        <HeaderDiv>아지트 명</HeaderDiv>
-        <SuvDiv>
-          <Photo src={basicImg} />
-          <InDiv>
-            <Nick>닉네임이 들어갑니다.</Nick>
-            <DateDiv>2022월 12월 23일(금)23:39</DateDiv>
-          </InDiv>
-        </SuvDiv>
-        <Content>내용이 들어갑니다.</Content>
-        <BtnDiv>
-          <MsgBtn>
-            <span>댓글</span>
-            <Num>1</Num>
-          </MsgBtn>
-          <LikeBtn type="button">
-            <BsHandThumbsUp />
-          </LikeBtn>
-          <HateBtn type="button">
-            <BsHandThumbsDown />
-          </HateBtn>
-          <EtcBtn type="button">
-            <AiOutlineEllipsis />
-          </EtcBtn>
-        </BtnDiv>
-      </MainDiv>
-      <div>-----------------------</div>
-      <MMainDiv>
-        <SuvDiv>
-          <PPhoto src={basicImg} />
-          <InDiv>
-            <NNick>닉네임이 들어갑니다.</NNick>
-            <DateDiv>2022월 12월 23일(금)23:39</DateDiv>
-          </InDiv>
-        </SuvDiv>
-        <CContent>댓글이 들어갑니다.</CContent>
-        <BtnDiv>
-          <CmtInput placeholder="댓글을 입력해주세요."></CmtInput>
-        </BtnDiv>
-      </MMainDiv>
     </div>
   );
 };

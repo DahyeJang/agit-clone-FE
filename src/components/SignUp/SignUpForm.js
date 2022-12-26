@@ -1,36 +1,166 @@
-import React from "react";
+import React, { useCallback, useState } from "react";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
-const SignUpForm = () =>{
+// ID 소문자 + 숫자 4~12자리
+// PW 소문자 + 숫자 + 특수문자 8~15자리
 
+const SignUpForm = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const [username, setUserName] = useState("");
+  const [nickname, setNickName] = useState("");
+  const [password, setPassword] = useState("");
+  const [passwordCheck, setPasswordCheck] = useState("");
+
+  const [usernameMsg, setUserNameMsg] = useState("");
+  const [nicknameMsg, setNickNameMsg] = useState("");
+  const [passwordMsg, setPasswordMsg] = useState("");
+  const [passwordCheckMsg, setPasswordCheckMsg] = useState("");
+
+  const [isUserName, setIsUserName] = useState(false);
+  const [isNickName, setIsNickName] = useState(false);
+  const [isPassword, setIsPassword] = useState(false);
+  const [isPasswordCheck, setIsPassworkCheck] = useState(false);
+  const [isUserNameCheck, setIsUserNameCheck] = useState(false);
+
+  const usernameRegex = /^(?=.[a-z])(?=.[0-9]){4,12}$/;
+  // 소문자 + 숫자 4자 이상 12자 이하 유저네임
+  const onChangeUserName = useCallback((e) => {
+    const usernameCurrent = e.target.value;
+    setUserName(usernameCurrent);
+
+    if (!usernameRegex.test(usernameCurrent)) {
+      setUserNameMsg("올바른 형식이 아닙니다.");
+      setIsUserName(false);
+    } else {
+      setUserNameMsg("올바른 형식 입니다.");
+      setIsUserName(true);
+    }
+  }, []);
+  // 2자이상 10자 이하 닉네임
+  const onChangeNickName = useCallback((e) => {
+    setNickName(e.target.value);
+    if (e.target.value < 2 || e.target.value > 10) {
+      setNickNameMsg(`문자가 포함되어야 합니다.`);
+      setIsNickName(false);
+    } else {
+      setNickNameMsg(`올바른 닉네임 형식 입니다.`);
+      setIsNickName(true);
+    }
+  }, []);
+  // 8자 이상 영문 소문자,특수문자,숫자 조합 비밀번호
+  const onChangePassword = useCallback((e) => {
+    const passwordRegex = /^(?=.[a-zA-Z])(?=.[!@#$%^*+=-])(?=.*[0-9]).{8,25}&/;
+    const passwordCurrent = e.target.value;
+    setPassword(passwordCurrent);
+
+    if (!passwordRegex.test(passwordCurrent)) {
+      setPasswordMsg("영문자+숫자+특수문자 조합으로 8자리 이상 입력해주세요.");
+      setIsPassword(false);
+    } else {
+      setPasswordMsg("안전한 비밀번호입니다.");
+      setIsPassword(true);
+    }
+  }, []);
+  // 위에 password와 일치하는지 여부 확인
+  const onChangePasswordCheck = useCallback((e) => {
+    const passwordCheckCurrent = e.target.value;
+    setPasswordCheck(passwordCheckCurrent);
+
+    if (password === passwordCheck) {
+      setPasswordCheckMsg("비밀번호가 일치합니다.");
+      setIsPassworkCheck(true);
+    } else {
+      setPasswordCheckMsg("비밀번호가 일치하지 않습니다. 다시 입력해주세요.");
+      setIsPassworkCheck(false);
+    }
+  }, []);
+
+  const onUserNameCheck = (e) => {
+    e.preventDefault();
+    if (username.length === 0) {
+      alert("아이디를 입력해주세요.");
+      return;
+    } else if (!usernameRegex.test(username)) {
+      alert("올바른 형식이 아닙니다.");
+      return;
+    }
+    // userNameCheck({username});
+  };
+
+  // const userNameCheck = async (post) => {
+  //   try {
+  //     const data = await
+  //   }
+  // }
 
   const signUpButton = () => {
-    navigate("/login")
-  }
+    navigate("/login");
+  };
+
   return (
     <div>
       <Login>아지트 회원가입</Login>
       <StDiv>
-       <IdInput placeholder="아이디를 입력해주세요."></IdInput>
-       <OverlapBtn>중복체크</OverlapBtn>
-    </StDiv>
-    <StDiv>
-    <StInput placeholder="닉네임을 입력해주세요."></StInput>
-    </StDiv>
-    <StDiv>
-    <StInput placeholder="비밀번호를 입력해주세요."></StInput>
-    </StDiv>
-    <StDiv>
-    <StInput placeholder="비밀번호를 확인해주세요."></StInput>
-    </StDiv>
-    <StDiv>
-      <CreateBtn onClick={signUpButton}>회원가입</CreateBtn>
-    </StDiv>
+        <IdInput
+          type="username"
+          placeholder="영문 소문자, 숫자가 모두 포함된 4~12자리로 작성해주세요.."
+          onChange={onChangeUserName}
+          disabled={isUserName}
+        />
+        <OverlapBtn
+          type="button"
+          onClick={(e) => {
+            onUserNameCheck(e);
+          }}
+        >
+          중복체크
+        </OverlapBtn>
+      </StDiv>
+      <StDiv>
+        <StInput
+          type="nickname"
+          placeholder="닉네임을 입력해주세요."
+          onChange={onChangeNickName}
+          disabled={isNickName}
+        />
+      </StDiv>
+      <StDiv>
+        <StInput
+          type="password"
+          placeholder="비밀번호를 입력해주세요."
+          onChange={onChangePassword}
+          disabled={isPassword}
+        />
+      </StDiv>
+      <StDiv>
+        <StInput
+          type="password"
+          placeholder="비밀번호를 확인해주세요."
+          onChange={onChangePasswordCheck}
+          disabled={isPasswordCheck}
+        />
+      </StDiv>
+      <StDiv>
+        <CreateBtn 
+          type="submit"
+          disabled={
+            !(
+              isUserName &&
+              isNickName &&
+              isPassword &&
+              isPasswordCheck &&
+              isUserNameCheck
+            )
+          }
+          onClick={signUpButton}>회원가입</CreateBtn>
+      </StDiv>
     </div>
-  )
-}
+  );
+};
 
 export default SignUpForm;
 
@@ -42,11 +172,11 @@ const Login = styled.div`
   margin-bottom: 20px;
   font-size: 35px;
   color: black;
-`
+`;
 
 const StDiv = styled.div`
   margin-bottom: 10px;
-`
+`;
 
 const StInput = styled.input`
   width: 482px;
@@ -54,14 +184,14 @@ const StInput = styled.input`
   padding: 0px 0px 0px 20px;
   font-size: medium;
   border: 1px solid #e2e2e2;
-`
+`;
 const IdInput = styled.input`
   width: 422px;
   height: 60px;
   padding: 0px 0px 0px 20px;
   font-size: medium;
   border: 1px solid #e2e2e2;
-`
+`;
 
 const CreateBtn = styled.button`
   color: white;
@@ -80,7 +210,7 @@ const CreateBtn = styled.button`
   &:focus {
     outline: none;
   }
-`
+`;
 
 const OverlapBtn = styled.button`
   height: 61px;
@@ -97,7 +227,7 @@ const OverlapBtn = styled.button`
   &:focus {
     outline: none;
   }
-`
+`;
 // import React, { useEffect, useState } from "react";
 // import styled from "styled-components";
 // import Button from "../elem/Button";

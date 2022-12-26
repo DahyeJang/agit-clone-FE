@@ -5,12 +5,14 @@ const Header = () => {
   return (
     <MainTitle>
       <StDiv>
-        <HIcon
-          src={
-            "https://velog.velcdn.com/images/posinity/post/3a461e10-687b-49d8-87b3-803beaf707a1/image.png"
-          }
-          alt="Hicon"
-        ></HIcon>
+        <a href="/">
+          <HIcon
+            src={
+              "https://velog.velcdn.com/images/posinity/post/3a461e10-687b-49d8-87b3-803beaf707a1/image.png"
+            }
+            alt="Hicon"
+          ></HIcon>
+        </a>
         <StLine></StLine>
         <p>항해99의 아지트</p>
       </StDiv>
