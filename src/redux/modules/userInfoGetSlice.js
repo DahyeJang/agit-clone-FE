@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { instance } from "../../core/api/axios";
+import { instance, baseURL } from "../../core/api/axios";
 
 const initialState = {
   data: [{}],
@@ -8,20 +8,20 @@ const initialState = {
 };
 
 //유저 가져오기
-export const __getUser = createAsyncThunk(
-  "main/getUser",
-  async (payload, thunkAPI) => {
-    //console.log("payload", payload);
-    try {
-      const data = await instance.get(`/user`);
-      //console.log(payload);
-      //console.log("data", data);
-      return thunkAPI.fulfillWithValue(data.data.data);
-    } catch (error) {
-      return thunkAPI.rejectWithValue(error);
-    }
-  }
-);
+// export const __getUser = createAsyncThunk(
+//   "main/getUser",
+//   async (payload, thunkAPI) => {
+//     //console.log("payload", payload);
+//     try {
+//       const data = await baseURL.get(`/user`);
+//       //console.log(payload);
+//       console.log("data", data);
+//       return thunkAPI.fulfillWithValue(data.data.data);
+//     } catch (error) {
+//       return thunkAPI.rejectWithValue(error);
+//     }
+//   }
+// );
 
 //아지트 리스트 가져오기
 export const __getAgit = createAsyncThunk(
@@ -29,7 +29,7 @@ export const __getAgit = createAsyncThunk(
   async (payload, thunkAPI) => {
     //console.log("payload", payload);
     try {
-      const data = await instance.get(`/agit`);
+      const data = await baseURL.get(`/agit`);
       //console.log(payload);
       //console.log("data", data.data.data);
       return thunkAPI.fulfillWithValue(data.data.data);
@@ -45,18 +45,18 @@ export const userInfoGetSlice = createSlice({
   reducers: {},
   extraReducers: {
     //유저 정보 불러오기
-    [__getUser.pending]: (state) => {
-      state.isLoading = true;
-    },
-    [__getUser.fulfilled]: (state, action) => {
-      //console.log("tagArr", tagArr);
-      state.isLoading = false;
-      state.userInfo = action.payload;
-    },
-    [__getUser.rejected]: (state, action) => {
-      state.isLoading = false;
-      state.error = action.payload;
-    },
+    // [__getUser.pending]: (state) => {
+    //   state.isLoading = true;
+    // },
+    // [__getUser.fulfilled]: (state, action) => {
+    //   //console.log("tagArr", tagArr);
+    //   state.isLoading = false;
+    //   state.userInfo = action.payload;
+    // },
+    // [__getUser.rejected]: (state, action) => {
+    //   state.isLoading = false;
+    //   state.error = action.payload;
+    // },
     //아지트 리스트 불러오기
     [__getAgit.pending]: (state) => {
       state.isLoading = true;

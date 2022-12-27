@@ -27,5 +27,12 @@ baseURL.interceptors.request.use((config) => {
   return config;
 });
 
+// instance.interceptors.request.use((config) => {
+//   if (config.headers === undefined) return;
+//   const token = getCookies("id");
+//   config.headers["Authorization"] = `${token}`;
+//   return config;
+// });
+
 // 로컬, 쿠키, 세션, 헤더에 셋 쿠키 형식
 // removeCookie 쿠키 삭제
