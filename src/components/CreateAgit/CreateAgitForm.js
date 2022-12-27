@@ -15,9 +15,9 @@ const CreateAgitForm = () => {
     if (agitName === "" || agitInfo === "") {
       alert("아지트 명, 아지트 소개를 확인해주세요.");
     } else {
-      dispatch(__postcreateagit({ agitName, agitInfo }))
-      alert("아지트 생성 완료!")
-      // navigate("/");
+      dispatch(__postcreateagit({ agitName, agitInfo }));
+      alert("아지트 생성 완료!");
+      navigate("/");
     }
   };
 
@@ -25,7 +25,7 @@ const CreateAgitForm = () => {
     <div>
       <Create>아지트 생성하기</Create>
       <StDiv>
-        <IdInput 
+        <IdInput
           name="agitName"
           type="text"
           placeholder="아지트명을 입력해주세요."
@@ -33,10 +33,10 @@ const CreateAgitForm = () => {
             const { value } = e.target;
             setAgitName(value);
           }}
-          ></IdInput>
+        ></IdInput>
       </StDiv>
       <StDiv>
-        <IdInput 
+        <IdInput
           name="agitInfo"
           type="text"
           placeholder="아지트를 소개해주세요."
@@ -44,10 +44,16 @@ const CreateAgitForm = () => {
             const { value } = e.target;
             setAgitInfo(value);
           }}
-          ></IdInput>
+        ></IdInput>
       </StDiv>
       <StDiv>
-        <CreateBtn onClick={(e) => {onCreateAgitBtn(e)}}>생성하기</CreateBtn>
+        <CreateBtn
+          onClick={(e) => {
+            onCreateAgitBtn(e);
+          }}
+        >
+          생성하기
+        </CreateBtn>
       </StDiv>
     </div>
   );

@@ -22,7 +22,7 @@ const AgitList = () => {
   const myAgitList = useSelector((state) => state.userInfoGet.agitList);
   const state = useSelector((state) => state);
 
-  console.log("myAgitList", myAgitList);
+  //console.log("myAgitList", myAgitList);
 
   useEffect(() => {
     if (myAgitList.length === 0) {

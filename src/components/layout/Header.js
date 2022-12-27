@@ -1,49 +1,23 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
-import { __getUser } from "../../redux/modules/userInfoGetSlice";
 import { baseURL, instance } from "../../core/api/axios";
-import { useCookies } from "react-cookie";
 
 const Header = () => {
-  const dispatch = useDispatch();
   const [isMine, setIsMine] = useState(false);
-  // const [data, setData] = useState("");
-
-  const [cookie, setCookie] = useCookies();
-  console.log("cookie", cookie);
 
   useEffect(() => {
-    if (!cookie) {
-      return;
-    }
-    dispatch(__getUser());
-    // const myInfo = async () => {
-    //   try {
-    //     const data = await baseURL.get(`/user`);
-    //     //console.log("data.data.data", data.data.data);
-    //     setData(data.data.data);
-    //     setIsMine(true)
-    //   } catch (error) {
-    //     //console.log(error);
-    //     setIsMine(false);
-    //   }
-    // };
-    // myInfo();
-    setIsMine(true);
+    const myInfo = async () => {
+      try {
+        const data = await baseURL.get(`/user`);
+        //console.log("data.data.data", data.data.data);
+        setIsMine(data.data.data);
+      } catch (error) {
+        //console.log(error);
+        setIsMine(false);
+      }
+    };
+    myInfo();
   }, []);
-
-  // useEffect(() => {
-  //   if (!cookie) {
-  //     return;
-  //   }
-  //   const firstAgit = myAgitList[0].id;
-  //   dispatch(__getAgitMember(firstAgit));
-  //   //console.log(agitList[0].id);
-  // }, [myAgitList]);
-
-  const aaa = useSelector((state) => state.userInfoGet.userInfo);
-  console.log("aaa", aaa);
 
   return (
     <MainTitle>
@@ -57,7 +31,11 @@ const Header = () => {
           ></HIcon>
         </a>
         <StLine></StLine>
-        {isMine ? <p>{aaa.nickname}의 아지트</p> : <p>항해99 아지트</p>}
+        {isMine !== false ? (
+          <p>{isMine.nickname}의 아지트</p>
+        ) : (
+          <p>항해99 아지트</p>
+        )}
       </StDiv>
     </MainTitle>
   );
