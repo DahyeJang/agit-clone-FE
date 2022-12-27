@@ -10,8 +10,8 @@ import {
 
 const AgitList = () => {
   const dispatch = useDispatch();
-  const [listOpen, setIListOpen] = useState(true);
-  const [memberOpen, setMemberOpen] = useState(true);
+  const [listOpen, setIListOpen] = useState(false);
+  const [memberOpen, setMemberOpen] = useState(false);
 
   useEffect(() => {
     //dispatch(__getInfo(param));
