@@ -11,17 +11,20 @@ import {
 const AgitHeader = () => {
   const dispatch = useDispatch();
 
-  //const agitList = useSelector((state) => state);
-  //console.log("agitList", agitList);
+  const agitInfo = useSelector((state) => state.agitInfoSlice.data);
+  //console.log("state", state);
 
-  // const agitList = useSelector((state) => state.userInfoGet.agitList);
-  // const firstAgit = agitList[0].id;
-  //console.log("firstAgit", firstAgit);
+  const agitList = useSelector((state) => state.userInfoGet.agitList);
 
-  // useEffect(() => {
-  //   //dispatch(__getInfo(param));
-  //   dispatch(__getAgit());
-  // }, [dispatch]);
+  console.log("agitList", agitList);
+
+  useEffect(() => {
+    if (agitList.length === 0) {
+      return;
+    }
+    const firstAgit = agitList[0].id;
+    dispatch(__getAgitPost(firstAgit));
+  }, []);
 
   // useEffect(() => {
   //   //dispatch(__getInfo(param));
@@ -32,8 +35,8 @@ const AgitHeader = () => {
     <>
       <StheaderImg>
         <HeaderContent>
-          <AgitName>아지트 이름</AgitName>
-          <p>아지트 설명</p>
+          <AgitName>{agitInfo.agitName}</AgitName>
+          <p>{agitInfo.agitInfo}</p>
         </HeaderContent>
       </StheaderImg>
     </>

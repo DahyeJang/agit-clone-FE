@@ -34,13 +34,13 @@ const Main = () => {
     myInfo();
 
     if (userInfoGetData.agitList.length !== 0) {
-      setHaveAgit(true);
+      setHaveAgit(true); //오류생김. 0인데 왜 true?
     }
   }, []);
 
   //const { userInfo, agitList } = userInfoGetData;
 
-  //console.log("userInfoGetData", userInfoGetData);
+  //console.log("isHaveAgit", userInfoGetData.agitList.length);
 
   // useEffect(() => {
   //   //이게 되는 것임!
