@@ -88,7 +88,7 @@ const AgitList = () => {
         </StSubject>
         {memberOpen && (
           <>
-            {memberList.map((member) => (
+            {memberList?.map((member) => (
               <Stlist>
                 <li>
                   {member.nickname}({member.username})
