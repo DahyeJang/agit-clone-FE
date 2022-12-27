@@ -13,7 +13,7 @@ export const __getAgitMember = createAsyncThunk(
     // console.log("payload", payload);
     try {
       const data = await instance.get(`/agit/${payload}/member`);
-      console.log("data", data);
+      //console.log("data", data);
       return thunkAPI.fulfillWithValue(data.data.data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);

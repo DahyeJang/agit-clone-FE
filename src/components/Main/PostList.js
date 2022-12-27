@@ -5,6 +5,8 @@ import basicImg from "../../img/basicImg.png";
 import { BsHandThumbsUp, BsHandThumbsDown } from "react-icons/bs";
 import { AiOutlineEllipsis } from "react-icons/ai";
 import Button from "../elem/Button";
+import ModalMenu from "./ModalMenu";
+
 const CreateAgitForm = () => {
   const navigate = useNavigate();
 
@@ -14,6 +16,7 @@ const CreateAgitForm = () => {
 
   const [show, setShow] = useState(false);
   const [showComment, setShowComment] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
 
   const [text, setText] = useState("");
   const [textComment, setTextComment] = useState("");
@@ -94,6 +97,15 @@ const CreateAgitForm = () => {
           </InDiv>
         </SuvDiv>
         <CContent>댓글이 들어갑니다.</CContent>
+        <EtcBtn
+          type="button"
+          rol="tab"
+          aria-controls="postModal"
+          aria-expanded="true"
+        >
+          <AiOutlineEllipsis />
+        </EtcBtn>
+        <ModalMenu />
         <BtnDiv>
           <CmtInput
             placeholder="댓글을 입력해주세요."
@@ -133,7 +145,7 @@ const MMainDiv = styled.div`
   //height: 198px;
   width: 723px;
   border: 1px solid #e2e2e2;
-  padding: 0px 20px 30px 0px;
+  padding: 0px 20px 50px 0px;
   background-color: #fafbfc;
   display: inline-block;
 `;
@@ -280,6 +292,7 @@ const EtcBtn = styled.button`
   border-radius: 2px;
   width: 26px;
   height: 23px;
+  float: right;
 `;
 
 const PostInput = styled.input`
@@ -301,7 +314,7 @@ const CmtInput = styled.input`
   padding: 0px 0px 0px 15px;
   //margin-left: 50px;
   border: 1px solid #e0e0e0;
-  margin: 0px 0px 10px 50px;
+  margin: 20px 0px 10px 50px;
 `;
 
 const FormButton = styled.div`
@@ -319,7 +332,7 @@ const FormButton = styled.div`
 const FormButton2 = styled.div`
   position: relative;
   height: 28px;
-  padding-top: 20px;
+  padding-top: 45px;
   float: right;
   Button {
     &:first-child {

@@ -9,10 +9,10 @@ const Header = () => {
     const myInfo = async () => {
       try {
         const data = await instance.get(`/user`);
-        console.log("data.data.data", data.data.data);
+        //console.log("data.data.data", data.data.data);
         setIsMine(data.data.data);
       } catch (error) {
-        console.log(error);
+        //console.log(error);
         setIsMine(false);
       }
     };

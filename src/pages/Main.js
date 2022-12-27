@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate, useParams } from "react-router-dom";
 
 import styled from "styled-components";
 import Button from "../components/elem/Button";
@@ -8,11 +9,11 @@ import PostForm from "../components/Main/PostForm";
 import Invite from "../components/Main/Invite";
 import PostList from "../components/Main/PostList";
 import AgitList from "../components/Main/AgitList";
-import AgitMember from "../components/Main/AgitMember";
 import AgitHeader from "../components/Main/AgitHeader";
 //import { AiOutlinePlus } from "react-icons/ai";
 
 const Main = () => {
+  const navigate = useNavigate();
   const [isLogin, setIsLogin] = useState(false);
   const [isHaveAgit, setHaveAgit] = useState(false);
 
@@ -25,9 +26,15 @@ const Main = () => {
   const userInfoGetData = useSelector((state) => state.userInfoGet);
   //const { userInfo, agitList } = userInfoGetData;
 
-  // console.log("agitList", agitList);
+  //console.log("userInfoGetData", userInfoGetData);
 
   useEffect(() => {
+    //이게 되는 것임!
+    // if (userInfoGetData.userInfo.length !== undefined) {
+    //   setIsLogin(true);
+    // }
+
+    //모달 만들기 위해
     if (userInfoGetData.userInfo !== null) {
       setIsLogin(true);
     }
@@ -55,6 +62,9 @@ const Main = () => {
           width="100%"
           backgroundColor="var(--color-point-blue)"
           color="#fff"
+          onClick={() => {
+            navigate("createagit");
+          }}
           // display="flex"
           // justifyContent="space-around"
           // gap="10px"
@@ -91,6 +101,10 @@ const StRight = styled.div`
   position: relative;
   width: 73%;
   margin-bottom: 50px;
+  h3 {
+    display: flex;
+    justify-content: center;
+  }
 `;
 
 const UpdateP = styled.div`

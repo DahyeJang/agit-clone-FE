@@ -5,26 +5,42 @@ import basicImg from "../../img/basicImg.png";
 import { CiLogout } from "react-icons/ci";
 import { useDispatch, useSelector } from "react-redux";
 import { __getUser } from "../../redux/modules/userInfoGetSlice";
+import { useNavigate, useParams } from "react-router-dom";
 
 const Profile = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   useEffect(() => {
     //dispatch(__getInfo(param));
     dispatch(__getUser());
-  }, [dispatch]);
+  }, []);
 
   const userInfoGet = useSelector((state) => state.userInfoGet.userInfo);
 
+  //console.log(userInfoGet.length);
+
   return (
     <>
-      {userInfoGet === "null" ? (
+      {userInfoGet.length === undefined ? (
         <StProfile>
           <StButtonSet>
-            <Button backgroundColor="var(--color-point-blue)" color="#fff">
+            <Button
+              backgroundColor="var(--color-point-blue)"
+              color="#fff"
+              onClick={() => {
+                navigate("login");
+              }}
+            >
               로그인
             </Button>
-            <Button>회원가입</Button>
+            <Button
+              onClick={() => {
+                navigate("signup");
+              }}
+            >
+              회원가입
+            </Button>
           </StButtonSet>
         </StProfile>
       ) : (
