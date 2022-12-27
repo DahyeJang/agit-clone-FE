@@ -12,7 +12,7 @@ export const __getAgitMember = createAsyncThunk(
   async (payload, thunkAPI) => {
     // console.log("payload", payload);
     try {
-      const data = await instance.get(`/agit/${payload}/member`);
+      const data = await baseURL.get(`/agit/${payload}/member`);
       //console.log("data", data);
       return thunkAPI.fulfillWithValue(data.data.data);
     } catch (error) {
@@ -27,7 +27,7 @@ export const __getAgitPost = createAsyncThunk(
   async (payload, thunkAPI) => {
     //console.log("payload", payload);
     try {
-      const data = await instance.get(`/agit/${payload}`);
+      const data = await baseURL.get(`/agit/${payload}`);
       //console.log("data", data);
       return thunkAPI.fulfillWithValue(data.data.data);
     } catch (error) {

@@ -8,7 +8,7 @@ const Header = () => {
   useEffect(() => {
     const myInfo = async () => {
       try {
-        const data = await instance.get(`/user`);
+        const data = await baseURL.get(`/user`);
         //console.log("data.data.data", data.data.data);
         setIsMine(data.data.data);
       } catch (error) {
