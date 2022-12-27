@@ -32,7 +32,7 @@ const SignUpForm = () => {
     setUserName(usernameCurrent);
 
     if (!usernameRegex.test(usernameCurrent)) {
-      setUserNameMsg("올바른 형식이 아닙니다.");
+      setUserNameMsg("영문 소문자, 숫자가 모두 포함된 4~12자리로 작성해주세요.");
       setIsUserName(false);
     } else {
       setUserNameMsg("올바른 형식 입니다.");
@@ -122,7 +122,7 @@ const SignUpForm = () => {
       <StDiv>
         <IdInput
           type="text"
-          placeholder="영문 소문자, 숫자가 모두 포함된 4~12자리로 작성해주세요.."
+          placeholder="아이디를 입력해주세요."
           onChange={onChangeUserName}
           // disabled={isUserName}
         />

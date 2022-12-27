@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { baseURL } from "../../core/api/axios";
-import { setCookie } from "../../core/api/cookie";
+import { setCookie } from "../../core/api/cookieControler";
 
 const LoginForm = () => {
   const navigate = useNavigate();
@@ -14,6 +14,7 @@ const LoginForm = () => {
     if (username === "" || password === "") {
       alert("아이디, 비밀번호를 확인해주세요.");
     } else {
+    }
       postLogin({
         username,
         password,
@@ -21,11 +22,10 @@ const LoginForm = () => {
         if (res === undefined) {
           navigate(`/login`);
         } else {
-          navigate(`/`);
-          setCookie("id", res.headers.authorization);
+          // navigate(`/`);
+          setCookie("id", res.headers.authorization, { path: "/" });
         }
       });
-    }
   };
 
   const postLogin = async (post) => {

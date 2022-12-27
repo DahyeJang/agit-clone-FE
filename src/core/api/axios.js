@@ -1,6 +1,6 @@
 import axios from "axios";
 import { serverUrl } from ".";
-import { getCookie } from "./cookie";
+import { getCookie } from "./cookieControler";
 // import { useCookies } from "react-cookie";
 
 // 헤더 없이 사용하는 경우
@@ -27,5 +27,5 @@ baseURL.interceptors.request.use((config) => {
   return config;
 });
 
-// 로컬, 쿠키, 세션, 헤더에 셋 쿠키 형식 
+// 로컬, 쿠키, 세션, 헤더에 셋 쿠키 형식
 // removeCookie 쿠키 삭제
