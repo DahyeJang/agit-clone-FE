@@ -19,7 +19,6 @@ const AgitList = () => {
   }, []);
 
   const agitList = useSelector((state) => state.userInfoGet.agitList);
-  //console.log("firstAgit", firstAgit);
 
   useEffect(() => {
     if (agitList.length === 0) {
@@ -29,6 +28,9 @@ const AgitList = () => {
     dispatch(__getAgitMember(firstAgit));
     //console.log(agitList[0].id);
   }, [agitList]);
+
+  const memberList = useSelector((state) => state.agitInfoSlice.agitMember);
+  console.log("memberList", memberList);
 
   const openListHandler = () => {
     {
@@ -83,13 +85,15 @@ const AgitList = () => {
           아지트 멤버 목록
         </StSubject>
         {memberOpen && (
-          <Stlist>
-            <li>멤버1</li>
-            <li>멤버2</li>
-            <li>멤버3</li>
-            <li>멤버4</li>
-            <li>멤버5</li>
-          </Stlist>
+          <>
+            {memberList.map((member) => (
+              <Stlist>
+                <li>
+                  {member.nickname}({member.username})
+                </li>
+              </Stlist>
+            ))}
+          </>
         )}
       </StAgitList>
     </>
