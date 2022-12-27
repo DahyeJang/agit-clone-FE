@@ -14,8 +14,8 @@ const AgitHeader = () => {
   //const agitList = useSelector((state) => state);
   //console.log("agitList", agitList);
 
-  const agitList = useSelector((state) => state.userInfoGet.agitList);
-  const firstAgit = agitList[0].id;
+  // const agitList = useSelector((state) => state.userInfoGet.agitList);
+  // const firstAgit = agitList[0].id;
   //console.log("firstAgit", firstAgit);
 
   // useEffect(() => {

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
+import { baseURL, instance } from "../../src/core/api/axios";
 
 import styled from "styled-components";
 import Button from "../components/elem/Button";
@@ -17,39 +18,52 @@ const Main = () => {
   const [isLogin, setIsLogin] = useState(false);
   const [isHaveAgit, setHaveAgit] = useState(false);
 
-  // const data = useSelector((state) => state);
-
-  // const loginUser = useSelector((state) => state.userInfoGet.userInfo);
-  // //console.log("userInfoGet", userInfoGet);
-  // //console.log("data", data);
-
   const userInfoGetData = useSelector((state) => state.userInfoGet);
-  //const { userInfo, agitList } = userInfoGetData;
-
-  //console.log("userInfoGetData", userInfoGetData);
 
   useEffect(() => {
-    //이게 되는 것임!
-    // if (userInfoGetData.userInfo.length !== undefined) {
-    //   setIsLogin(true);
-    // }
-
-    //모달 만들기 위해
-    if (userInfoGetData.userInfo !== null) {
-      setIsLogin(true);
-    }
+    const myInfo = async () => {
+      try {
+        const data = await baseURL.get(`/user`);
+        //console.log("data.data.data", data.data.data);
+        setIsLogin(data.data.data);
+      } catch (error) {
+        //console.log(error);
+        setIsLogin(false);
+      }
+    };
+    myInfo();
 
     if (userInfoGetData.agitList.length !== 0) {
       setHaveAgit(true);
     }
-    // switch (userInfoGetData) {
-    //   case userInfoGetData.userInfo !== null:
-    //     setIsLogin(true);
-    //   case userInfoGetData.agitList.length !== 0:
-    //     setHaveAgit(true);
-    //     break;
-    // }
   }, []);
+
+  //const { userInfo, agitList } = userInfoGetData;
+
+  //console.log("userInfoGetData", userInfoGetData);
+
+  // useEffect(() => {
+  //   //이게 되는 것임!
+  //   if (userInfoGetData.userInfo.length !== undefined) {
+  //     setIsLogin(true);
+  //   }
+
+  //   //모달 만들기 위해
+  //   // if (userInfoGetData.userInfo !== null) {
+  //   //   setIsLogin(true);
+  //   // }
+
+  //   if (userInfoGetData.agitList.length !== 0) {
+  //     setHaveAgit(true);
+  //   }
+  //   // switch (userInfoGetData) {
+  //   //   case userInfoGetData.userInfo !== null:
+  //   //     setIsLogin(true);
+  //   //   case userInfoGetData.agitList.length !== 0:
+  //   //     setHaveAgit(true);
+  //   //     break;
+  //   // }
+  // }, []);
 
   //console.log("isHaveAgit", isHaveAgit);
 

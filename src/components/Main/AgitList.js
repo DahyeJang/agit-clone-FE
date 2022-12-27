@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { TfiArrowCircleUp } from "react-icons/tfi";
 
 import styled from "styled-components";
 import { __getAgit } from "../../redux/modules/userInfoGetSlice";
@@ -54,7 +55,11 @@ const AgitList = () => {
       <StAgitList>
         <StSubject>
           <HIcon
-            src={"../../img/arrowdownicon.png"}
+            src={
+              listOpen
+                ? "../../img/arrowdownicon.png"
+                : "../../img/arrowupicon.png"
+            }
             alt="Hicon"
             onClick={openListHandler}
           ></HIcon>
@@ -80,7 +85,11 @@ const AgitList = () => {
       <StAgitList>
         <StSubject>
           <HIcon
-            src={"../../img/arrowdownicon.png"}
+            src={
+              memberOpen
+                ? "../../img/arrowdownicon.png"
+                : "../../img/arrowupicon.png"
+            }
             alt="Hicon"
             onClick={openMemberHandler}
           ></HIcon>
