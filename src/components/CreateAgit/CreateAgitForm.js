@@ -1,25 +1,53 @@
-import React from "react";
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { __postcreateagit } from "../../redux/modules/agitCreateSlice";
 
 const CreateAgitForm = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const [agitName, setAgitName] = useState("");
+  const [agitInfo, setAgitInfo] = useState("");
 
-  const createAgitBtn = () => {
-    navigate("/");
+  const onCreateAgitBtn = (e) => {
+    e.preventDefault();
+    if (agitName === "" || agitInfo === "") {
+      alert("아지트 명, 아지트 소개를 확인해주세요.");
+    } else {
+      dispatch(__postcreateagit({ agitName, agitInfo }))
+      alert("아지트 생성 완료!")
+      navigate("/");
+    }
   };
 
   return (
     <div>
       <Create>아지트 생성하기</Create>
       <StDiv>
-        <IdInput placeholder="아지트명을 입력해주세요."></IdInput>
+        <IdInput 
+          name="agitName"
+          type="text"
+          placeholder="아지트명을 입력해주세요."
+          onChange={(e) => {
+            const { value } = e.target;
+            setAgitName(value);
+          }}
+          ></IdInput>
       </StDiv>
       <StDiv>
-        <IdInput placeholder="아지트를 소개해주세요."></IdInput>
+        <IdInput 
+          name="agitInfo"
+          type="text"
+          placeholder="아지트를 소개해주세요."
+          onChange={(e) => {
+            const { value } = e.target;
+            setAgitInfo(value);
+          }}
+          ></IdInput>
       </StDiv>
       <StDiv>
-        <CreateBtn onClick={createAgitBtn}>생성하기</CreateBtn>
+        <CreateBtn onClick={(e) => {onCreateAgitBtn(e)}}>생성하기</CreateBtn>
       </StDiv>
     </div>
   );

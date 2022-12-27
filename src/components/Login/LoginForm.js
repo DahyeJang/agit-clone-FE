@@ -2,31 +2,12 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { baseURL } from "../../core/api/axios";
-import { setCookie } from "../../core/api/cookieControler";
+import { setCookies } from "../../core/api/cookieControler";
 
 const LoginForm = () => {
   const navigate = useNavigate();
   const [username, setUserName] = useState("");
   const [password, setPassword] = useState("");
-
-  const onSubmitHandler = (e) => {
-    e.preventDefault();
-    if (username === "" || password === "") {
-      alert("아이디, 비밀번호를 확인해주세요.");
-    } else {
-    }
-      postLogin({
-        username,
-        password,
-      }).then((res) => {
-        if (res === undefined) {
-          navigate(`/login`);
-        } else {
-          // navigate(`/`);
-          setCookie("id", res.headers.authorization, { path: "/" });
-        }
-      });
-  };
 
   const postLogin = async (post) => {
     try {
@@ -37,6 +18,27 @@ const LoginForm = () => {
         alert("아이디, 비밀번호를 확인해주세요.");
       }
     } catch (error) {}
+  };
+  
+  const onSubmitHandler = (e) => {
+    e.preventDefault();
+    if (username === "" || password === "") {
+      alert("아이디, 비밀번호를 확인해주세요.");
+    } else {
+    }
+      postLogin({
+        username,
+        password,
+      }).then((res) => {
+        console.log(res)
+        if (res === undefined) {
+          navigate("/login");
+        } else {
+          setCookies("Authorization", res.headers.authorization, {path: "/"});
+          alert("로그인 완료!")
+          navigate("/");
+        }
+      });
   };
 
   return (
