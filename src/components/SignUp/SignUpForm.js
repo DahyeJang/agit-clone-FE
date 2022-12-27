@@ -2,9 +2,8 @@ import React, { useCallback, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-
-// ID 소문자 + 숫자 4~12자리
-// PW 소문자 + 숫자 + 특수문자 8~15자리
+import { instance } from "../../core/api/axios";
+import { __postsignup } from "../../redux/modules/signUpSlice";
 
 const SignUpForm = () => {
   const navigate = useNavigate();
@@ -26,7 +25,7 @@ const SignUpForm = () => {
   const [isPasswordCheck, setIsPassworkCheck] = useState(false);
   const [isUserNameCheck, setIsUserNameCheck] = useState(false);
 
-  const usernameRegex = /^(?=.[a-z])(?=.[0-9]){4,12}$/;
+  const usernameRegex = /^(?=.*?[a-z])(?=.*?[0-9]).{4,12}$/;
   // 소문자 + 숫자 4자 이상 12자 이하 유저네임
   const onChangeUserName = useCallback((e) => {
     const usernameCurrent = e.target.value;
@@ -40,11 +39,11 @@ const SignUpForm = () => {
       setIsUserName(true);
     }
   }, []);
-  // 2자이상 10자 이하 닉네임
+  // 2자이상 10자 이하 닉네임 (특수문자 공백 x)
   const onChangeNickName = useCallback((e) => {
     setNickName(e.target.value);
     if (e.target.value < 2 || e.target.value > 10) {
-      setNickNameMsg(`문자가 포함되어야 합니다.`);
+      setNickNameMsg(`올바르지 않은 닉네임 형식 입니다.`);
       setIsNickName(false);
     } else {
       setNickNameMsg(`올바른 닉네임 형식 입니다.`);
@@ -52,35 +51,43 @@ const SignUpForm = () => {
     }
   }, []);
   // 8자 이상 영문 소문자,특수문자,숫자 조합 비밀번호
-  const onChangePassword = useCallback((e) => {
-    const passwordRegex = /^(?=.[a-zA-Z])(?=.[!@#$%^*+=-])(?=.*[0-9]).{8,25}&/;
-    const passwordCurrent = e.target.value;
-    setPassword(passwordCurrent);
+  const onChangePassword = useCallback(
+    (e) => {
+      const passwordRegex = /^(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%^*+=-]).{8,25}$/;
+      const passwordCurrent = e.target.value;
+      setPassword(passwordCurrent);
 
-    if (!passwordRegex.test(passwordCurrent)) {
-      setPasswordMsg("영문자+숫자+특수문자 조합으로 8자리 이상 입력해주세요.");
-      setIsPassword(false);
-    } else {
-      setPasswordMsg("안전한 비밀번호입니다.");
-      setIsPassword(true);
-    }
-  }, []);
+      if (!passwordRegex.test(passwordCurrent)) {
+        setPasswordMsg(
+          "영문자+숫자+특수문자 조합으로 8자리 이상 입력해주세요."
+        );
+        setIsPassword(false);
+      } else {
+        setPasswordMsg("안전한 비밀번호입니다.");
+        setIsPassword(true);
+      }
+    },
+    [password]
+  );
   // 위에 password와 일치하는지 여부 확인
-  const onChangePasswordCheck = useCallback((e) => {
-    const passwordCheckCurrent = e.target.value;
-    setPasswordCheck(passwordCheckCurrent);
+  const onChangePasswordCheck = useCallback(
+    (e) => {
+      const passwordCheckCurrent = e.target.value;
+      setPasswordCheck(passwordCheckCurrent);
 
-    if (password === passwordCheck) {
-      setPasswordCheckMsg("비밀번호가 일치합니다.");
-      setIsPassworkCheck(true);
-    } else {
-      setPasswordCheckMsg("비밀번호가 일치하지 않습니다. 다시 입력해주세요.");
-      setIsPassworkCheck(false);
-    }
-  }, []);
+      if (password === passwordCheckCurrent) {
+        setPasswordCheckMsg("비밀번호가 일치합니다.");
+        setIsPassworkCheck(true);
+      } else {
+        setPasswordCheckMsg("비밀번호가 일치하지 않습니다. 다시 입력해주세요.");
+        setIsPassworkCheck(false);
+      }
+    },
+    [password]
+  );
 
   const onUserNameCheck = (e) => {
-    e.preventDefault();
+    // e.preventDefault();
     if (username.length === 0) {
       alert("아이디를 입력해주세요.");
       return;
@@ -88,16 +95,24 @@ const SignUpForm = () => {
       alert("올바른 형식이 아닙니다.");
       return;
     }
-    // userNameCheck({username});
+    userNameCheck({ username });
   };
 
-  // const userNameCheck = async (post) => {
-  //   try {
-  //     const data = await
-  //   }
-  // }
+  const userNameCheck = async (post) => {
+    try {
+      const data = await instance.post(`/user/idcheck`, post);
+      if (data.data.statusCode === 200) {
+        alert("사용 가능한 아이디 입니다.");
+        setIsUserNameCheck(true);
+      } else {
+        alert("중복된 아이디 입니다.");
+      }
+    } catch (error) {}
+  };
 
-  const signUpButton = () => {
+  const onClickSignUpBtn = () => {
+    dispatch(__postsignup({ username, nickname, password }));
+    alert("회원가입 완료!");
     navigate("/login");
   };
 
@@ -106,46 +121,78 @@ const SignUpForm = () => {
       <Login>아지트 회원가입</Login>
       <StDiv>
         <IdInput
-          type="username"
+          type="text"
           placeholder="영문 소문자, 숫자가 모두 포함된 4~12자리로 작성해주세요.."
           onChange={onChangeUserName}
-          disabled={isUserName}
+          // disabled={isUserName}
         />
         <OverlapBtn
           type="button"
-          onClick={(e) => {
-            onUserNameCheck(e);
+          onClick={() => {
+            onUserNameCheck();
           }}
         >
           중복체크
         </OverlapBtn>
       </StDiv>
+      {username.length > 0 && (
+        <span
+          style={{ color: isUserName ? "var(--color-point-blue)" : "#f85032" }}
+          className={`message ${isUserName ? "success" : "error"}`}
+        >
+          {usernameMsg}
+        </span>
+      )}
       <StDiv>
         <StInput
-          type="nickname"
+          type="text"
           placeholder="닉네임을 입력해주세요."
           onChange={onChangeNickName}
-          disabled={isNickName}
+          // disabled={isNickName}
         />
       </StDiv>
+      {nickname.length > 1 && (
+        <span
+          style={{ color: isNickName ? "var(--color-point-blue)" : "#f85032" }}
+          className={`message ${isNickName ? "success" : "error"}`}
+        >
+          {nicknameMsg}
+        </span>
+      )}
       <StDiv>
         <StInput
           type="password"
           placeholder="비밀번호를 입력해주세요."
           onChange={onChangePassword}
-          disabled={isPassword}
         />
       </StDiv>
+      {password.length > 0 && (
+        <span
+          style={{ color: isPassword ? "var(--color-point-blue)" : "#f85032" }}
+          className={`message ${isPassword ? "success" : "error"}`}
+        >
+          {passwordMsg}
+        </span>
+      )}
       <StDiv>
         <StInput
           type="password"
           placeholder="비밀번호를 확인해주세요."
           onChange={onChangePasswordCheck}
-          disabled={isPasswordCheck}
         />
       </StDiv>
+      {passwordCheck.length > 0 && (
+        <span
+          style={{
+            color: isPasswordCheck ? "var(--color-point-blue)" : "#f85032",
+          }}
+          className={`message ${isPasswordCheck ? "success" : "error"}`}
+        >
+          {passwordCheckMsg}
+        </span>
+      )}
       <StDiv>
-        <CreateBtn 
+        <CreateBtn
           type="submit"
           disabled={
             !(
@@ -156,7 +203,10 @@ const SignUpForm = () => {
               isUserNameCheck
             )
           }
-          onClick={signUpButton}>회원가입</CreateBtn>
+          onClick={onClickSignUpBtn}
+        >
+          회원가입
+        </CreateBtn>
       </StDiv>
     </div>
   );
