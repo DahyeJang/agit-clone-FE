@@ -7,16 +7,28 @@ import { useDispatch, useSelector } from "react-redux";
 import { __getUser } from "../../redux/modules/userInfoGetSlice";
 import { useNavigate, useParams } from "react-router-dom";
 import { baseURL, instance } from "../../core/api/axios";
+import { useCookies } from "react-cookie";
+import { getCookies } from "../../core/api/cookieControler";
 
 const Profile = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [isLogin, setIsLogin] = useState(false);
-
+  const [cookie, setCookie, removeCookie] = useCookies();
+  const token = getCookies("Authorization");
   // useEffect(() => {
   //   //dispatch(__getInfo(param));
   //   dispatch(__getUser());
   // }, []);
+
+  const logOut = () => {
+    if (!window.confirm("로그아웃 하시겠습니까?")) {
+      return;
+    } else {
+      removeCookie("Authorization", {path: "/"});
+      setIsLogin(false);
+    }
+  }
 
   useEffect(() => {
     const myInfo = async () => {
@@ -68,7 +80,7 @@ const Profile = () => {
               <DateDiv>{isLogin.username}</DateDiv>
             </InDiv>
           </SuvDiv>
-          <CiLogout />
+          <CiLogout type="button" onClick={logOut}/>
         </StLogin>
       )}
     </>
