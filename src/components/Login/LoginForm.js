@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { baseURL } from "../../core/api/axios";
+import { baseURL, instance } from "../../core/api/axios";
 import { setCookies } from "../../core/api/cookieControler";
 
 const LoginForm = () => {
@@ -19,26 +19,26 @@ const LoginForm = () => {
       }
     } catch (error) {}
   };
-  
+
   const onSubmitHandler = (e) => {
     e.preventDefault();
     if (username === "" || password === "") {
       alert("아이디, 비밀번호를 확인해주세요.");
     } else {
     }
-      postLogin({
-        username,
-        password,
-      }).then((res) => {
-        console.log(res)
-        if (res === undefined) {
-          navigate("/login");
-        } else {
-          setCookies("Authorization", res.headers.authorization, {path: "/"});
-          alert("로그인 완료!")
-          navigate("/");
-        }
-      });
+    postLogin({
+      username,
+      password,
+    }).then((res) => {
+      console.log(res);
+      if (res === undefined) {
+        navigate("/login");
+      } else {
+        setCookies("Authorization", res.headers.authorization, { path: "/" });
+        alert("로그인 완료!");
+        navigate("/");
+      }
+    });
   };
 
   return (
