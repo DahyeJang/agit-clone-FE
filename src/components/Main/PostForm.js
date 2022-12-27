@@ -15,8 +15,6 @@ const PostForm = () => {
     setBackgroundColor("var(--color-point-blue)");
   };
 
-  console.log(disabled);
-
   return (
     <PostForm2>
       <PostFormContent>

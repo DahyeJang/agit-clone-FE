@@ -16,7 +16,7 @@ const AgitHeader = () => {
 
   const agitList = useSelector((state) => state.userInfoGet.agitList);
   const firstAgit = agitList[0].id;
-  console.log("firstAgit", firstAgit);
+  //console.log("firstAgit", firstAgit);
 
   // useEffect(() => {
   //   //dispatch(__getInfo(param));
