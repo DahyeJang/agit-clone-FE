@@ -22,7 +22,7 @@ export const baseURL = axios.create({
 // interceptors를 통해 토큰값을 보내주는 것에 사용
 baseURL.interceptors.request.use((config) => {
   if (config.headers === undefined) return;
-  const token = getCookies();
+  const token = getCookies("Authorization");
   config.headers["Authorization"] = `${token}`;
   return config;
 });

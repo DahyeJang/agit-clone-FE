@@ -13,7 +13,7 @@ export const __postcreateagit = createAsyncThunk(
   async (payload, thunkAPI) => {
     console.log(payload)
     try {
-      const data = await instance.post("/room", payload)
+      const data = await instance.post("/agit", payload)
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
       return thunkAPI.rejectWithValue("error");
