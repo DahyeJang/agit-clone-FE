@@ -17,6 +17,7 @@ const Input = (props) => {
       fontFamily={props.fontFamily}
       padding={props.padding}
       height={props.height}
+      onChange={props.onChange}
     >
       {props.children}
     </StInput>

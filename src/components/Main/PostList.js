@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import basicImg from "../../img/basicImg.png";
@@ -12,8 +12,34 @@ const CreateAgitForm = () => {
     navigate("/");
   };
 
+  const [show, setShow] = useState(false);
+  const [showComment, setShowComment] = useState(false);
+
+  const [text, setText] = useState("");
+  const [textComment, setTextComment] = useState("");
+
+  const onChangeInputHandler = (e) => {
+    setText(e.target.value);
+    setShow(true);
+  };
+
+  const onClickCancel = () => {
+    setShow(false);
+    setText("");
+  };
+
+  const onChangeInputCommentHandler = (e) => {
+    setTextComment(e.target.value);
+    setShowComment(true);
+  };
+
+  const onClickCommentCancel = () => {
+    setShowComment(false);
+    setTextComment("");
+  };
+
   return (
-    <div>
+    <>
       <MainDiv>
         {/* <HeaderDiv>아지트 명</HeaderDiv> */}
         <SuvDiv>
@@ -41,18 +67,23 @@ const CreateAgitForm = () => {
             <AiOutlineEllipsis />
           </EtcBtn>
         </BtnDiv>
-        <PostInput placeholder="댓글을 입력해주세요."></PostInput>
-        <FormButton>
-          <Button>취소</Button>
-          <Button
-            borderColor="rgba(88, 132, 224, 0.2)"
-            backgroundColor="rgba(88, 132, 224, 0.7)"
-            color="white"
-            //disabled={!isActive}
-          >
-            작성하기
-          </Button>
-        </FormButton>
+        <PostInput
+          placeholder="댓글을 입력해주세요."
+          onChange={onChangeInputHandler}
+          value={text}
+        ></PostInput>
+        {show && (
+          <FormButton>
+            <Button onClick={onClickCancel}>취소</Button>
+            <Button
+              borderColor="rgba(88, 132, 224, 0.2)"
+              backgroundColor="var(--color-point-blue)"
+              color="white"
+            >
+              작성하기
+            </Button>
+          </FormButton>
+        )}
       </MainDiv>
       <MMainDiv>
         <SuvDiv>
@@ -64,10 +95,26 @@ const CreateAgitForm = () => {
         </SuvDiv>
         <CContent>댓글이 들어갑니다.</CContent>
         <BtnDiv>
-          <CmtInput placeholder="댓글을 입력해주세요."></CmtInput>
+          <CmtInput
+            placeholder="댓글을 입력해주세요."
+            onChange={onChangeInputCommentHandler}
+            value={textComment}
+          ></CmtInput>
         </BtnDiv>
+        {showComment && (
+          <FormButton2>
+            <Button onClick={onClickCommentCancel}>취소</Button>
+            <Button
+              borderColor="rgba(88, 132, 224, 0.2)"
+              backgroundColor="var(--color-point-blue)"
+              color="white"
+            >
+              작성하기
+            </Button>
+          </FormButton2>
+        )}
       </MMainDiv>
-    </div>
+    </>
   );
 };
 
@@ -84,9 +131,11 @@ const MainDiv = styled.div`
 
 const MMainDiv = styled.div`
   //height: 198px;
+  width: 723px;
   border: 1px solid #e2e2e2;
-  padding: 12px 20px 40px;
-  background-color: #fff;
+  padding: 0px 20px 30px 0px;
+  background-color: #fafbfc;
+  display: inline-block;
 `;
 
 const Photo = styled.img`
@@ -246,18 +295,31 @@ const PostInput = styled.input`
 `;
 
 const CmtInput = styled.input`
-  width: 610px;
+  width: 100%;
   height: 27px;
   color: #333333;
   padding: 0px 0px 0px 15px;
-  margin-left: 50px;
+  //margin-left: 50px;
   border: 1px solid #e0e0e0;
+  margin: 0px 0px 10px 50px;
 `;
 
 const FormButton = styled.div`
   position: relative;
   height: 28px;
   padding-top: 10px;
+  float: right;
+  Button {
+    &:first-child {
+      margin-right: 5px;
+    }
+  }
+`;
+
+const FormButton2 = styled.div`
+  position: relative;
+  height: 28px;
+  padding-top: 20px;
   float: right;
   Button {
     &:first-child {
