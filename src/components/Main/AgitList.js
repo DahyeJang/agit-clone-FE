@@ -18,19 +18,22 @@ const AgitList = () => {
     dispatch(__getAgit());
   }, []);
 
-  const agitList = useSelector((state) => state.userInfoGet.agitList);
+  const myAgitList = useSelector((state) => state.userInfoGet.agitList);
+  const state = useSelector((state) => state);
+
+  console.log("myAgitList", myAgitList);
 
   useEffect(() => {
-    if (agitList.length === 0) {
+    if (myAgitList.length === 0) {
       return;
     }
-    const firstAgit = agitList[0].id;
+    const firstAgit = myAgitList[0].id;
     dispatch(__getAgitMember(firstAgit));
     //console.log(agitList[0].id);
-  }, [agitList]);
+  }, [myAgitList]);
 
   const memberList = useSelector((state) => state.agitInfoSlice.agitMember);
-  console.log("memberList", memberList);
+  //console.log("memberList", memberList);
 
   const openListHandler = () => {
     {
@@ -59,16 +62,15 @@ const AgitList = () => {
         </StSubject>
         {listOpen && (
           <>
-            {agitList.map((agitList) => (
-              <Stlist>
+            {myAgitList?.map((agit) => (
+              <Stlist key={agit.id}>
                 <li
-                  key={agitList.id}
                   onClick={() => {
-                    dispatch(__getAgitPost(agitList.id));
-                    dispatch(__getAgitMember(agitList.id));
+                    dispatch(__getAgitPost(agit.id));
+                    dispatch(__getAgitMember(agit.id));
                   }}
                 >
-                  {agitList.agitName}
+                  {agit.agitname}
                 </li>
               </Stlist>
             ))}

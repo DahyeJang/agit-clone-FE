@@ -6,23 +6,39 @@ import { CiLogout } from "react-icons/ci";
 import { useDispatch, useSelector } from "react-redux";
 import { __getUser } from "../../redux/modules/userInfoGetSlice";
 import { useNavigate, useParams } from "react-router-dom";
+import { baseURL, instance } from "../../core/api/axios";
 
 const Profile = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [isLogin, setIsLogin] = useState(false);
+
+  // useEffect(() => {
+  //   //dispatch(__getInfo(param));
+  //   dispatch(__getUser());
+  // }, []);
 
   useEffect(() => {
-    //dispatch(__getInfo(param));
-    dispatch(__getUser());
+    const myInfo = async () => {
+      try {
+        const data = await baseURL.get(`/user`);
+        //console.log("data.data.data", data.data.data);
+        setIsLogin(data.data.data);
+      } catch (error) {
+        //console.log(error);
+        setIsLogin(false);
+      }
+    };
+    myInfo();
   }, []);
 
-  const userInfoGet = useSelector((state) => state.userInfoGet.userInfo);
+  //const userInfoGet = useSelector((state) => state.userInfoGet.userInfo);
 
-  //console.log(userInfoGet.length);
+  //console.log(setIsLogin);
 
   return (
     <>
-      {userInfoGet.length === undefined ? (
+      {isLogin === false ? (
         <StProfile>
           <StButtonSet>
             <Button
@@ -48,8 +64,8 @@ const Profile = () => {
           <SuvDiv>
             <Photo src={basicImg} />
             <InDiv>
-              <Nick>{userInfoGet.nickname}</Nick>
-              <DateDiv>{userInfoGet.username}</DateDiv>
+              <Nick>{isLogin.nickname}</Nick>
+              <DateDiv>{isLogin.username}</DateDiv>
             </InDiv>
           </SuvDiv>
           <CiLogout />
