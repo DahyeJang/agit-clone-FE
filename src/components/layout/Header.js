@@ -1,7 +1,24 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
+import { baseURL, instance } from "../../core/api/axios";
 
 const Header = () => {
+  const [isMine, setIsMine] = useState(false);
+
+  useEffect(() => {
+    const myInfo = async () => {
+      try {
+        const data = await instance.get(`/user`);
+        console.log("data.data.data", data.data.data);
+        setIsMine(data.data.data);
+      } catch (error) {
+        console.log(error);
+        setIsMine(false);
+      }
+    };
+    myInfo();
+  }, []);
+
   return (
     <MainTitle>
       <StDiv>
@@ -14,18 +31,15 @@ const Header = () => {
           ></HIcon>
         </a>
         <StLine></StLine>
-        <p>항해99의 아지트</p>
+        {isMine !== false ? (
+          <p>{isMine.nickname}의 아지트</p>
+        ) : (
+          <p>항해99 아지트</p>
+        )}
       </StDiv>
     </MainTitle>
   );
 };
-
-const Container = styled.div`
-  width: 100vw;
-  display: flex;
-  align-items: center;
-  background-color: aliceblue;
-`;
 
 const MainTitle = styled.div`
   min-width: 1020px;

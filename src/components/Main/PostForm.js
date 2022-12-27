@@ -5,13 +5,17 @@ import Button from "../elem/Button";
 const PostForm = () => {
   const [text, enableButton] = useState("");
   const [disabled, setDisabled] = useState(false);
+  const [backgroundColor, setBackgroundColor] = useState(
+    "rgba(88, 132, 224, 0.7)"
+  );
 
   const onChangeInputHandler = (e) => {
     enableButton(e.target.value);
     setDisabled(true);
+    setBackgroundColor("var(--color-point-blue)");
   };
 
-  console.log(text);
+  console.log(disabled);
 
   return (
     <PostForm2>
@@ -26,7 +30,7 @@ const PostForm = () => {
           <Button>취소</Button>
           <Button
             borderColor="rgba(88, 132, 224, 0.2)"
-            //backgroundColor="var(--color-point-blue)"
+            backgroundColor={backgroundColor}
             color="white"
             type="submit"
             disabled={!disabled}

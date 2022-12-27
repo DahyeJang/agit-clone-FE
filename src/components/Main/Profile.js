@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Button from "../elem/Button";
 import basicImg from "../../img/basicImg.png";
@@ -14,28 +14,31 @@ const Profile = () => {
     dispatch(__getUser());
   }, [dispatch]);
 
-  const aaa = useSelector((state) => state);
+  const userInfoGet = useSelector((state) => state.userInfoGet.userInfo);
 
   return (
     <>
-      <StProfile>
-        <StButtonSet>
-          <Button backgroundColor="var(--color-point-blue)" color="#fff">
-            로그인
-          </Button>
-          <Button>회원가입</Button>
-        </StButtonSet>
-      </StProfile>
-      <StLogin>
-        <SuvDiv>
-          <Photo src={basicImg} />
-          <InDiv>
-            <Nick>아이디</Nick>
-            <DateDiv>닉네임</DateDiv>
-          </InDiv>
-        </SuvDiv>
-        <CiLogout />
-      </StLogin>
+      {userInfoGet === "null" ? (
+        <StProfile>
+          <StButtonSet>
+            <Button backgroundColor="var(--color-point-blue)" color="#fff">
+              로그인
+            </Button>
+            <Button>회원가입</Button>
+          </StButtonSet>
+        </StProfile>
+      ) : (
+        <StLogin>
+          <SuvDiv>
+            <Photo src={basicImg} />
+            <InDiv>
+              <Nick>{userInfoGet.nickname}</Nick>
+              <DateDiv>{userInfoGet.username}</DateDiv>
+            </InDiv>
+          </SuvDiv>
+          <CiLogout />
+        </StLogin>
+      )}
     </>
   );
 };
@@ -110,8 +113,8 @@ const Nick = styled.div`
 
 const DateDiv = styled.div`
   font-weight: 400;
-  font-size: 11px;
-  color: #979797;
+  font-size: 13px;
+  /* color: #979797; */
 `;
 
 export default Profile;

@@ -21,6 +21,7 @@ const Button = (props) => {
       justifyContent={props.justifyContent}
       paddingLeft={props.paddingLeft}
       gap={props.gap}
+      disabled={props.disabled}
     >
       {props.children}
     </StButton>
