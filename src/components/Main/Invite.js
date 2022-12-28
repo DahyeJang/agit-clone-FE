@@ -1,20 +1,34 @@
 import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
+import { __postinvite } from "../../redux/modules/inviteSlice";
 import Button from "../elem/Button";
 import Input from "../elem/Input";
 
 const Invite = () => {
-  const [text, enableButton] = useState("");
+  const [enableButton, setEnableButton] = useState("");
   const [disabled, setDisabled] = useState(false);
   const [backgroundColor, setBackgroundColor] = useState(
     "rgba(88, 132, 224, 0.7)"
   );
-
+  const dispatch = useDispatch("");
+  const myAgitList = useSelector((state) => state.userInfoGet.agitList);  
+  console.log("myAgitList", myAgitList)
   const onChangeInputHandler = (e) => {
-    enableButton(e.target.value);
+    setEnableButton(e.target.value);
     setDisabled(true);
     setBackgroundColor("var(--color-point-blue)");
   };
+  console.log(enableButton)
+  const onInviteBtn = (e) => {
+    e.preventDefault();
+    if(enableButton === "" ) {
+      alert("아이디를 입력해주세요");
+    } else {
+      dispatch(__postinvite({ enableButton }))
+      alert("초대 완료!")
+    }
+  }
 
   return (
     <>
@@ -25,8 +39,9 @@ const Invite = () => {
           <Button
             backgroundColor={backgroundColor}
             color="white"
-            type="submit"
+            type="button"
             disabled={!disabled}
+            onClick={(e) => {onInviteBtn(e)}}
           >
             초대
           </Button>
