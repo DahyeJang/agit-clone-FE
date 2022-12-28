@@ -37,7 +37,7 @@ const initialState = {
 export const __getAgitMember = createAsyncThunk(
   "agitInfo/getAgitMember",
   async (payload, thunkAPI) => {
-    // console.log("payload", payload);
+    console.log("payload", payload);
     try {
       const data = await baseURL.get(`/agit/${payload}/member`);
       //console.log("data", data);
@@ -51,11 +51,12 @@ export const __getAgitMember = createAsyncThunk(
 //아지트 포스트 가져오기
 export const __getAgitPost = createAsyncThunk(
   "agitInfo/__getAgitPost",
+
   async (payload, thunkAPI) => {
-    //console.log("payload", payload);
+    console.log("payload", payload);
     try {
       const data = await baseURL.get(`/agit/${payload}`);
-      //console.log("data", data);
+      console.log("data", data);
       return thunkAPI.fulfillWithValue(data.data.data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);

@@ -1,18 +1,33 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
+import { __postcontents } from "../../redux/modules/contentsSlice";
+import { __getAgit } from "../../redux/modules/userInfoGetSlice";
 import Button from "../elem/Button";
 
 const PostForm = () => {
-  const [text, enableButton] = useState("");
+  const [enableButton, setEnableButton] = useState("");
   const [disabled, setDisabled] = useState(false);
+  const dispatch = useDispatch();
   const [backgroundColor, setBackgroundColor] = useState(
     "rgba(88, 132, 224, 0.7)"
   );
 
+  useEffect(() => {
+    dispatch(__getAgit());
+  }, []);
+  
+  const agitInfo = useSelector((state) => state.agitInfoSlice.data);
+  console.log("agitInfo", agitInfo.postList);
+
   const onChangeInputHandler = (e) => {
-    enableButton(e.target.value);
+    setEnableButton(e.target.value);
     setDisabled(true);
     setBackgroundColor("var(--color-point-blue)");
+  };
+
+  const onClickPostContents = (id) => {
+    dispatch(__postcontents({ content: enableButton, agitId: id }));
   };
 
   return (
@@ -22,7 +37,6 @@ const PostForm = () => {
           placeholder={"Cmd+Enter를 누르면 글이 등록됩니다."}
           onChange={onChangeInputHandler}
           type="text"
-          value={text}
         ></Textarea>
         <FormButton>
           <Button>취소</Button>
@@ -30,8 +44,11 @@ const PostForm = () => {
             borderColor="rgba(88, 132, 224, 0.2)"
             backgroundColor={backgroundColor}
             color="white"
-            type="submit"
+            type="button"
             disabled={!disabled}
+            onClick={() => {
+              onClickPostContents(agitInfo.agitId);
+            }}
           >
             작성하기
           </Button>

@@ -1,14 +1,14 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-
 import styled from "styled-components";
 import basicImg from "../../img/basicImg.png";
 import { BsHandThumbsUp, BsHandThumbsDown } from "react-icons/bs";
 import { AiOutlineEllipsis } from "react-icons/ai";
 import Button from "../elem/Button";
-import ModalMenu from "./ModalMenu";
 import ModalMenuComment from "./ModalMenuComment";
+import { __delContent } from "../../redux/modules/contentsSlice";
+import { __posthate, __postlike } from "../../redux/modules/likeSlice";
+import { __getAgit } from "../../redux/modules/userInfoGetSlice";
 import {
   __getAgitPost,
   __postComment,
@@ -16,6 +16,18 @@ import {
   __modifyComment,
 } from "../../redux/modules/agitInfoSlice";
 import Comment from "./PostListModal";
+
+const CreateAgitForm = () => {
+  const dispatch = useDispatch();
+  const postList = useSelector((state) => state.agitInfoSlice.data.postList);
+  const [like, setLike] = useState(false);
+  const [hate, setHate] = useState(false);
+  const [show, setShow] = useState(false);
+  const [showComment, setShowComment] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
+  console.log(postList);
+  const [text, setText] = useState("");
+  const [textComment, setTextComment] = useState("");
 
 const CreateAgitForm = () => {
   const navigate = useNavigate();
@@ -44,6 +56,7 @@ const CreateAgitForm = () => {
   const [commentId, setCommentId] = useState("");
 
   //댓글 추가
+
   const onChangeInputHandler = (e) => {
     setText(e.target.value);
     setShow(true);
@@ -112,6 +125,36 @@ const CreateAgitForm = () => {
     window.location.reload();
   };
 
+  const onClickDelContent = (id) => {
+    dispatch(__delContent(id));
+  };
+
+  const onClickLike = (a, c) => {
+    dispatch(__postlike(a));
+    if (c === null) {
+      setLike(false);
+      setHate(false);
+    } else if (c === true) {
+      setLike(true);
+      setHate(false);
+    }
+  };
+
+  const onClickHate = (a, c) => {
+    dispatch(__posthate(a));
+    if (c === null) {
+      setLike(false);
+      setHate(false);
+    } else if (c === false) {
+      setLike(false);
+      setHate(true);
+    }
+  };
+
+  useEffect(() => {
+    dispatch(__getAgit());
+  }, [dispatch]);
+
   return (
     <>
       {postList?.map((post) => (
@@ -122,7 +165,15 @@ const CreateAgitForm = () => {
               <Photo src={basicImg} />
               <InDiv>
                 <Nick>{post.nickname}</Nick>
-                <DateDiv>{post.createdAt}</DateDiv>
+                <DateDiv>
+                  {post.createdAt.slice(0, 10) +
+                    "  " +
+                    post.createdAt.slice(11, 13) +
+                    "시" +
+                    "  " +
+                    post.createdAt.slice(14, 16) +
+                    "분"}
+                </DateDiv>   
                 {post.modified ? <Modify>수정됨</Modify> : ""}
               </InDiv>
             </SuvDiv>
@@ -133,17 +184,35 @@ const CreateAgitForm = () => {
                   <span>댓글</span>
                   <Num>{post.commentList.length}</Num>
                 </MsgBtn>
-                <LikeBtn type="button">
+                <LikeBtn
+                  type="button"
+                  onClick={() => onClickLike(post.id, post.postLike)}
+                >
                   <BsHandThumbsUp />
                 </LikeBtn>
-                <HateBtn type="button">
+                {post.likeCount}
+                <HateBtn
+                  type="button"
+                  onClick={() => onClickHate(post.id, post.postLike)}
+                >
                   <BsHandThumbsDown />
                 </HateBtn>
+                {post.hateCount}
               </div>
               <EtcBtn type="button">
                 <AiOutlineEllipsis />
               </EtcBtn>
-              <ModalMenu />
+              <ModalMenuFrame id="postModal">
+                <li>수정하기</li>
+                <li
+                  type="button"
+                  onClick={() => {
+                    onClickDelContent(post.id);
+                  }}
+                >
+                  삭제하기
+                </li>
+              </ModalMenuFrame>
             </BtnDiv>
             <PostInput
               placeholder="댓글을 입력해주세요."
@@ -410,7 +479,7 @@ const Num = styled.span`
 
 const LikeBtn = styled.button`
   background-color: white;
-  margin-right: 10px;
+  margin-right: 5px;
   color: #5c5c5c;
   margin-top: 0.3px;
   border: 1px solid #e0e0e0;
@@ -423,7 +492,8 @@ const HateBtn = styled.button`
   background-color: white;
   color: #5c5c5c;
   margin-top: 0.3px;
-  //margin-left: 5px;
+  margin-left: 5px;
+  margin-right: 5px;
   border: 1px solid #e0e0e0;
   border-radius: 2px;
   width: 26px;
@@ -489,6 +559,7 @@ const FormButton2 = styled.div`
   }
 `;
 
+
 //모달창 관련
 const ModalMenuFrame = styled.div`
   bottom: -50px;
@@ -513,6 +584,7 @@ const ModalMenuFrame = styled.div`
     text-align: left;
     white-space: nowrap;
     cursor: pointer;
+
   }
   button {
     /* display: block;
