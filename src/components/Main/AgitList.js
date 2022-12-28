@@ -34,7 +34,7 @@ const AgitList = () => {
   }, [myAgitList]);
 
   const memberList = useSelector((state) => state.agitInfoSlice.agitMember);
-  //console.log("memberList", memberList);
+  console.log("memberList", memberList);
 
   const openListHandler = () => {
     {
@@ -138,6 +138,7 @@ const Stlist = styled.ul`
   line-height: 26px;
   color: #808080;
   display: contents;
+  cursor: pointer;
 `;
 
 const HIcon = styled.img`

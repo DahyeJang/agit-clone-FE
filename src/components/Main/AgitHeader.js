@@ -16,7 +16,7 @@ const AgitHeader = () => {
 
   const agitList = useSelector((state) => state.userInfoGet.agitList);
 
-  console.log("agitList", agitList);
+  //console.log("agitList", agitList);
 
   useEffect(() => {
     if (agitList.length === 0) {
