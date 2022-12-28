@@ -1,14 +1,19 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+
 import styled from "styled-components";
 import basicImg from "../../img/basicImg.png";
 import { BsHandThumbsUp, BsHandThumbsDown } from "react-icons/bs";
 import { AiOutlineEllipsis } from "react-icons/ai";
 import Button from "../elem/Button";
 import ModalMenu from "./ModalMenu";
+import ModalMenuComment from "./ModalMenuComment";
 
 const CreateAgitForm = () => {
   const navigate = useNavigate();
+  const postList = useSelector((state) => state.agitInfoSlice.data.postList);
+  //console.log("agitInfo", agitInfo);
 
   const createAgitBtn = () => {
     navigate("/");
@@ -43,89 +48,98 @@ const CreateAgitForm = () => {
 
   return (
     <>
-      <MainDiv>
-        {/* <HeaderDiv>아지트 명</HeaderDiv> */}
-        <SuvDiv>
-          <Photo src={basicImg} />
-          <InDiv>
-            <Nick>닉네임이 들어갑니다.</Nick>
-            <DateDiv>2022월 12월 23일(금)23:39</DateDiv>
-          </InDiv>
-        </SuvDiv>
-        <Content>내용이 들어갑니다.</Content>
-        <BtnDiv>
-          <div>
-            <MsgBtn>
-              <span>댓글</span>
-              <Num>1</Num>
-            </MsgBtn>
-            <LikeBtn type="button">
-              <BsHandThumbsUp />
-            </LikeBtn>
-            <HateBtn type="button">
-              <BsHandThumbsDown />
-            </HateBtn>
-          </div>
-          <EtcBtn type="button">
-            <AiOutlineEllipsis />
-          </EtcBtn>
-        </BtnDiv>
-        <PostInput
-          placeholder="댓글을 입력해주세요."
-          onChange={onChangeInputHandler}
-          value={text}
-        ></PostInput>
-        {show && (
-          <FormButton>
-            <Button onClick={onClickCancel}>취소</Button>
-            <Button
-              borderColor="rgba(88, 132, 224, 0.2)"
-              backgroundColor="var(--color-point-blue)"
-              color="white"
-            >
-              작성하기
-            </Button>
-          </FormButton>
-        )}
-      </MainDiv>
-      <MMainDiv>
-        <SuvDiv>
-          <PPhoto src={basicImg} />
-          <InDiv>
-            <NNick>닉네임이 들어갑니다.</NNick>
-            <DateDiv>2022월 12월 23일(금)23:39</DateDiv>
-          </InDiv>
-        </SuvDiv>
-        <CContent>댓글이 들어갑니다.</CContent>
-        <EtcBtn
-          type="button"
-          rol="tab"
-          aria-controls="postModal"
-          aria-expanded="true"
-        >
-          <AiOutlineEllipsis />
-        </EtcBtn>
-        <ModalMenu />
-        <BtnDiv>
-          <CmtInput
-            placeholder="댓글을 입력해주세요."
-            onChange={onChangeInputCommentHandler}
-            value={textComment}
-          ></CmtInput>
-        </BtnDiv>
-        {showComment && (
-          <FormButton2>
-            <Button onClick={onClickCommentCancel}>취소</Button>
-            <Button
-              borderColor="rgba(88, 132, 224, 0.2)"
-              backgroundColor="var(--color-point-blue)"
-              color="white"
-            >
-              작성하기
-            </Button>
-          </FormButton2>
-        )}
-      </MMainDiv>
+      {postList?.map((post) => (
+        <>
+          <MainDiv key={post.id}>
+            {/* <HeaderDiv>아지트 명</HeaderDiv> */}
+            <SuvDiv>
+              <Photo src={basicImg} />
+              <InDiv>
+                <Nick>{post.nickname}</Nick>
+                <DateDiv>{post.createdAt}</DateDiv>
+              </InDiv>
+            </SuvDiv>
+            <Content>{post.content}</Content>
+            <BtnDiv>
+              <div>
+                <MsgBtn>
+                  <span>댓글</span>
+                  <Num>{post.commentList.length}</Num>
+                </MsgBtn>
+                <LikeBtn type="button">
+                  <BsHandThumbsUp />
+                </LikeBtn>
+                <HateBtn type="button">
+                  <BsHandThumbsDown />
+                </HateBtn>
+              </div>
+              <EtcBtn type="button">
+                <AiOutlineEllipsis />
+              </EtcBtn>
+              <ModalMenu />
+            </BtnDiv>
+            <PostInput
+              placeholder="댓글을 입력해주세요."
+              onChange={onChangeInputHandler}
+              value={text}
+            ></PostInput>
+            {show && (
+              <FormButton>
+                <Button onClick={onClickCancel}>취소</Button>
+                <Button
+                  borderColor="rgba(88, 132, 224, 0.2)"
+                  backgroundColor="var(--color-point-blue)"
+                  color="white"
+                >
+                  작성하기
+                </Button>
+              </FormButton>
+            )}
+          </MainDiv>
+          {post.commentList?.map((comment) => (
+            <>
+              <MMainDiv>
+                <SuvDiv>
+                  <PPhoto src={basicImg} />
+                  <InDiv>
+                    <NNick>{comment.nickname}</NNick>
+                    <DateDiv>{comment.createdAt}</DateDiv>
+                  </InDiv>
+                </SuvDiv>
+                <CContent>{comment.content}</CContent>
+                <EtcBtn
+                  type="button"
+                  rol="tab"
+                  aria-controls="postModal"
+                  aria-expanded="true"
+                >
+                  <AiOutlineEllipsis />
+                </EtcBtn>
+                <ModalMenuComment />
+                <BtnDiv>
+                  <CmtInput
+                    placeholder="댓글을 입력해주세요."
+                    onChange={onChangeInputCommentHandler}
+                    value={textComment}
+                  ></CmtInput>
+                </BtnDiv>
+                {showComment && (
+                  <FormButton2>
+                    <Button onClick={onClickCommentCancel}>취소</Button>
+                    <Button
+                      borderColor="rgba(88, 132, 224, 0.2)"
+                      backgroundColor="var(--color-point-blue)"
+                      color="white"
+                    >
+                      작성하기
+                    </Button>
+                  </FormButton2>
+                )}
+              </MMainDiv>
+            </>
+          ))}
+        </>
+      ))}
     </>
   );
 };

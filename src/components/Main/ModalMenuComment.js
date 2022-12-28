@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 
-const ModalMenu = () => {
+const ModalMenuComment = () => {
   return (
     <>
       <ModalMenuFrame id="postModal">
@@ -49,4 +49,4 @@ const ModalMenuFrame = styled.div`
   }
 `;
 
-export default ModalMenu;
+export default ModalMenuComment;

@@ -25,10 +25,10 @@ const Profile = () => {
     if (!window.confirm("로그아웃 하시겠습니까?")) {
       return;
     } else {
-      removeCookie("Authorization", {path: "/"});
+      removeCookie("Authorization", { path: "/" });
       setIsLogin(false);
     }
-  }
+  };
 
   useEffect(() => {
     const myInfo = async () => {
@@ -80,7 +80,7 @@ const Profile = () => {
               <DateDiv>{isLogin.username}</DateDiv>
             </InDiv>
           </SuvDiv>
-          <CiLogout type="button" onClick={logOut}/>
+          <CiLogout type="button" onClick={logOut} cursor="pointer" />
         </StLogin>
       )}
     </>

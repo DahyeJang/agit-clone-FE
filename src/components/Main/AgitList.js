@@ -22,7 +22,7 @@ const AgitList = () => {
   const myAgitList = useSelector((state) => state.userInfoGet.agitList);
   const state = useSelector((state) => state);
 
-  console.log("myAgitList", myAgitList);
+  //console.log("myAgitList", myAgitList);
 
   useEffect(() => {
     if (myAgitList.length === 0) {
@@ -34,7 +34,7 @@ const AgitList = () => {
   }, [myAgitList]);
 
   const memberList = useSelector((state) => state.agitInfoSlice.agitMember);
-  //console.log("memberList", memberList);
+  console.log("memberList", memberList);
 
   const openListHandler = () => {
     {
@@ -138,6 +138,7 @@ const Stlist = styled.ul`
   line-height: 26px;
   color: #808080;
   display: contents;
+  cursor: pointer;
 `;
 
 const HIcon = styled.img`
