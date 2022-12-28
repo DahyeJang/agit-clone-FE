@@ -5,19 +5,18 @@ import { baseURL, instance } from "../../core/api/axios";
 const Header = () => {
   const [isMine, setIsMine] = useState(false);
 
-  useEffect(() => {
-    const myInfo = async () => {
-      try {
-        const data = await baseURL.get(`/user`);
-        //console.log("data.data.data", data.data.data);
-        setIsMine(data.data.data);
-      } catch (error) {
-        //console.log(error);
-        setIsMine(false);
-      }
-    };
-    myInfo();
+  useEffect(async () => {
+    try {
+      const data = await baseURL.get(`/user`);
+      //console.log("data.data.data", data.data.data);
+      setIsMine(data.data.data); //타입에러
+    } catch (error) {
+      //console.log(error);
+      setIsMine(false);
+    }
   }, []);
+
+  console.log(isMine);
 
   return (
     <MainTitle>
@@ -34,7 +33,7 @@ const Header = () => {
         {isMine !== false ? (
           <p>{isMine.nickname}의 아지트</p>
         ) : (
-          <p>항해99 아지트</p>
+          <p></p> //isloading 값을 가지고와서 삼항연산자로
         )}
       </StDiv>
     </MainTitle>
