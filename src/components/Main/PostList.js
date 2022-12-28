@@ -16,6 +16,7 @@ import {
   __postComment,
   __deleteComment,
   __modifyComment,
+  __modifyPost,
 } from "../../redux/modules/agitInfoSlice";
 
 const PostList = () => {
@@ -25,10 +26,10 @@ const PostList = () => {
   const [hate, setHate] = useState(false);
   const [show, setShow] = useState(false);
   const [showComment, setShowComment] = useState(false);
-  const [modalOpen, setModalOpen] = useState(false);
-  console.log(postList);
+
   const [text, setText] = useState("");
   const [textComment, setTextComment] = useState("");
+  const [textPost, setTextPost] = useState("");
 
   const navigate = useNavigate();
 
@@ -45,13 +46,24 @@ const PostList = () => {
 
   const [isEditMode, setIsEditMode] = useState(false);
 
+  const [isPostEditMode, setIsPostEditMode] = useState(false);
+
   const [commentId, setCommentId] = useState("");
+
+  const [inputpostId, setInputPostId] = useState("");
+
+  const [modalOpen, setModalOpen] = useState(false);
+
+  const [postModalOpen, setPostModalOpen] = useState(false);
 
   //댓글 추가
 
-  const onChangeInputHandler = (e) => {
+  const onChangeInputHandler = (e, id) => {
     setText(e.target.value);
+    setInputPostId(id);
     setShow(true);
+    //console.log("e", e);
+    //console.log("id", id);
   };
 
   const onClickPostHandler = (id) => {
@@ -67,6 +79,12 @@ const PostList = () => {
     setModalOpen(false);
   };
 
+  //게시글 수정
+  const onClickPostModifyToggle = (id) => {
+    setIsPostEditMode(true);
+    setPostModalOpen(false);
+  };
+
   const onClickCancel = () => {
     setShow(false);
     setText("");
@@ -77,10 +95,21 @@ const PostList = () => {
     setShowComment(true);
   };
 
+  const onChangeInputPostHandler = (e) => {
+    setTextPost(e.target.value);
+    //setShowComment(true);
+  };
+
   const onClickCommentCancel = () => {
     setShowComment(false);
     setTextComment("");
     setIsEditMode(false);
+  };
+
+  const onClickPostCancel = () => {
+    // setShowComment(false);
+    // setTextComment("");
+    setIsPostEditMode(false);
   };
 
   const onClickCommentDelete = (commentId, postId) => {
@@ -91,18 +120,19 @@ const PostList = () => {
   };
 
   const ModalHandler = (id) => {
-    //console.log(postList.commentList.id);
-    // filter
-    // if (id === parseInt(postList.commentList.id)) {
-    //   setModalOpen(true);
-    // } else {
-    //   setModalOpen(false);
-    // }
     setCommentId(id);
     {
       modalOpen ? setModalOpen(false) : setModalOpen(true);
     }
     setIsEditMode(false);
+  };
+
+  const PostModalHandler = (id) => {
+    setInputPostId(id);
+    {
+      postModalOpen ? setPostModalOpen(false) : setPostModalOpen(true);
+    }
+    //setIsEditMode(false);
   };
 
   const onClickCommentModify = (commentId, postId) => {
@@ -111,6 +141,17 @@ const PostList = () => {
         postId: postId,
         commentId: commentId,
         content: textComment,
+      })
+    );
+    //dispatch(__getAgitPost(postId));
+    window.location.reload();
+  };
+
+  const onClickPostModify = (postId) => {
+    dispatch(
+      __modifyPost({
+        postId: postId,
+        content: textPost,
       })
     );
     //dispatch(__getAgitPost(postId));
@@ -149,7 +190,7 @@ const PostList = () => {
 
   return (
     <>
-      {postList?.map((post) => (
+      {[...postList]?.reverse().map((post) => (
         <>
           <MainDiv key={post.id}>
             {/* <HeaderDiv>아지트 명</HeaderDiv> */}
@@ -169,49 +210,92 @@ const PostList = () => {
                 {post.modified ? <Modify>수정됨</Modify> : ""}
               </InDiv>
             </SuvDiv>
-            <Content>{post.content}</Content>
-            <BtnDiv>
-              <div>
-                <MsgBtn>
-                  <span>댓글</span>
-                  <Num>{post.commentList.length}</Num>
-                </MsgBtn>
-                <LikeBtn
-                  type="button"
-                  onClick={() => onClickLike(post.id, post.postLike)}
-                >
-                  <BsHandThumbsUp />
-                </LikeBtn>
-                {post.likeCount}
-                <HateBtn
-                  type="button"
-                  onClick={() => onClickHate(post.id, post.postLike)}
-                >
-                  <BsHandThumbsDown />
-                </HateBtn>
-                {post.hateCount}
-              </div>
-              <EtcBtn type="button">
-                <AiOutlineEllipsis />
-              </EtcBtn>
-              <ModalMenuFrame id="postModal">
-                <li>수정하기</li>
-                <li
-                  type="button"
-                  onClick={() => {
-                    onClickDelContent(post.id);
-                  }}
-                >
-                  삭제하기
-                </li>
-              </ModalMenuFrame>
-            </BtnDiv>
+            {isPostEditMode && inputpostId === post.id ? (
+              <>
+                <BtnDiv>
+                  <Textarea
+                    placeholder={post.content}
+                    onChange={onChangeInputPostHandler}
+                    value={textPost}
+                  ></Textarea>
+                </BtnDiv>
+                <FormButton2>
+                  <Button onClick={onClickPostCancel}>취소</Button>
+                  <Button
+                    borderColor="rgba(88, 132, 224, 0.2)"
+                    backgroundColor="var(--color-point-blue)"
+                    color="white"
+                    onClick={() => {
+                      onClickPostModify(post.id);
+                    }}
+                  >
+                    수정하기
+                  </Button>
+                </FormButton2>
+              </>
+            ) : (
+              <>
+                <Content>{post.content}</Content>
+                <BtnDiv>
+                  <div>
+                    <MsgBtn>
+                      <span>댓글</span>
+                      <Num>{post.commentList.length}</Num>
+                    </MsgBtn>
+                    <LikeBtn
+                      type="button"
+                      onClick={() => onClickLike(post.id, post.postLike)}
+                    >
+                      <BsHandThumbsUp />
+                    </LikeBtn>
+                    {post.likeCount}
+                    <HateBtn
+                      type="button"
+                      onClick={() => onClickHate(post.id, post.postLike)}
+                    >
+                      <BsHandThumbsDown />
+                    </HateBtn>
+                    {post.hateCount}
+                  </div>
+                  <EtcBtn
+                    type="button"
+                    onClick={() => {
+                      PostModalHandler(post.id);
+                    }}
+                  >
+                    <AiOutlineEllipsis />
+                  </EtcBtn>
+                  {postModalOpen && post.id === inputpostId && (
+                    <ModalMenuFrame2>
+                      <li
+                        onClick={() => {
+                          onClickPostModifyToggle();
+                        }}
+                      >
+                        수정하기
+                      </li>
+                      <li
+                        type="button"
+                        onClick={() => {
+                          onClickDelContent(post.id);
+                        }}
+                      >
+                        삭제하기
+                      </li>
+                    </ModalMenuFrame2>
+                  )}
+                </BtnDiv>
+              </>
+            )}
+
             <PostInput
               placeholder="댓글을 입력해주세요."
-              onChange={onChangeInputHandler}
+              onChange={(e) => {
+                onChangeInputHandler(e, post.id);
+              }}
               value={text}
             ></PostInput>
-            {show && (
+            {show && inputpostId === post.id && (
               <FormButton>
                 <Button onClick={onClickCancel}>취소</Button>
                 <Button
@@ -229,7 +313,7 @@ const PostList = () => {
           </MainDiv>
 
           {/* 댓글 표시되는 부분 */}
-          {post.commentList?.map((comment) => (
+          {[...post.commentList]?.reverse().map((comment) => (
             // <Comment comment={comment} post={post} />
             <>
               <MMainDiv key={comment.id}>
@@ -238,7 +322,16 @@ const PostList = () => {
                     <PPhoto src={basicImg} />
                     <InDiv>
                       <NNick>{comment.nickname}</NNick>
-                      <DateDiv>{comment.createdAt}</DateDiv>
+                      <DateDiv>
+                        {comment.createdAt.slice(0, 10) +
+                          "  " +
+                          comment.createdAt.slice(11, 13) +
+                          "시" +
+                          "  " +
+                          comment.createdAt.slice(14, 16) +
+                          "분"}
+                      </DateDiv>
+                      {comment.modified ? <Modify>수정됨</Modify> : ""}
                     </InDiv>
                   </SuvDiv>
                   {isEditMode && comment.id === commentId ? (
@@ -327,8 +420,16 @@ const PostList = () => {
 };
 export default PostList;
 
+const Textarea = styled.textarea`
+  border-color: #e3e3e3;
+  background-color: #fcfcfc;
+  width: 100%;
+  min-height: 48px;
+`;
+
 const MainDiv = styled.div`
   //height: 222px;
+  position: relative;
   border: 1px solid #e2e2e2;
   padding: 0px 20px 30px;
   background-color: #fff;
@@ -575,8 +676,22 @@ const ModalMenuFrame = styled.div`
     white-space: nowrap;
     cursor: pointer;
   }
-  button {
-    /* display: block;
+`;
+
+const ModalMenuFrame2 = styled.div`
+  bottom: 10px;
+  right: 20px;
+  position: absolute;
+  z-index: 10;
+  min-width: 118px;
+  width: auto;
+  border: 1px solid #d0d0d0;
+  border-radius: 2px;
+  background-color: #fff;
+  li {
+    height: 32px;
+    border-bottom: 1px solid #dcdfe4;
+    display: block;
     width: 100%;
     height: 100%;
     padding: 0 10px;
@@ -584,6 +699,7 @@ const ModalMenuFrame = styled.div`
     line-height: 33px;
     color: #222;
     text-align: left;
-    white-space: nowrap; */
+    white-space: nowrap;
+    cursor: pointer;
   }
 `;
