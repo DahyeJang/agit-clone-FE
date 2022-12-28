@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+
 import styled from "styled-components";
 import basicImg from "../../img/basicImg.png";
 import { BsHandThumbsUp, BsHandThumbsDown } from "react-icons/bs";
 import { AiOutlineEllipsis } from "react-icons/ai";
 import Button from "../elem/Button";
-import ModalMenuComment from "./ModalMenuComment";
+
 import { __delContent } from "../../redux/modules/contentsSlice";
 import { __posthate, __postlike } from "../../redux/modules/likeSlice";
 import { __getAgit } from "../../redux/modules/userInfoGetSlice";
@@ -15,9 +17,8 @@ import {
   __deleteComment,
   __modifyComment,
 } from "../../redux/modules/agitInfoSlice";
-import Comment from "./PostListModal";
 
-const CreateAgitForm = () => {
+const PostList = () => {
   const dispatch = useDispatch();
   const postList = useSelector((state) => state.agitInfoSlice.data.postList);
   const [like, setLike] = useState(false);
@@ -29,11 +30,8 @@ const CreateAgitForm = () => {
   const [text, setText] = useState("");
   const [textComment, setTextComment] = useState("");
 
-const CreateAgitForm = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
 
-  const postList = useSelector((state) => state.agitInfoSlice.data.postList);
   //console.log("postList", postList);
 
   // const ccc = useSelector(
@@ -45,13 +43,7 @@ const CreateAgitForm = () => {
     navigate("/");
   };
 
-  const [show, setShow] = useState(false);
-  const [showComment, setShowComment] = useState(false);
-  const [modalOpen, setModalOpen] = useState(false);
   const [isEditMode, setIsEditMode] = useState(false);
-
-  const [text, setText] = useState("");
-  const [textComment, setTextComment] = useState("");
 
   const [commentId, setCommentId] = useState("");
 
@@ -94,7 +86,7 @@ const CreateAgitForm = () => {
   const onClickCommentDelete = (commentId, postId) => {
     //console.log("commentId", commentId);
     //console.log("postId", postId);
-    dispatch(__deleteComment({ postId: postId, commentId: commentId }));
+    dispatch(__deleteComment({ postId, commentId }));
     window.location.reload();
   };
 
@@ -173,7 +165,7 @@ const CreateAgitForm = () => {
                     "  " +
                     post.createdAt.slice(14, 16) +
                     "분"}
-                </DateDiv>   
+                </DateDiv>
                 {post.modified ? <Modify>수정됨</Modify> : ""}
               </InDiv>
             </SuvDiv>
@@ -333,8 +325,7 @@ const CreateAgitForm = () => {
     </>
   );
 };
-
-export default CreateAgitForm;
+export default PostList;
 
 const MainDiv = styled.div`
   //height: 222px;
@@ -559,7 +550,6 @@ const FormButton2 = styled.div`
   }
 `;
 
-
 //모달창 관련
 const ModalMenuFrame = styled.div`
   bottom: -50px;
@@ -584,7 +574,6 @@ const ModalMenuFrame = styled.div`
     text-align: left;
     white-space: nowrap;
     cursor: pointer;
-
   }
   button {
     /* display: block;
