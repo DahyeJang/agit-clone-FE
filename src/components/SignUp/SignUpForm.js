@@ -121,30 +121,39 @@ const SignUpForm = () => {
   return (
     <div>
       <Login>아지트 회원가입</Login>
-      <StDiv>
-        <IdInput
-          type="text"
-          placeholder="아이디를 입력해주세요."
-          onChange={onChangeUserName}
-          // disabled={isUserName}
-        />
-        <OverlapBtn
-          type="button"
-          onClick={() => {
-            onUserNameCheck();
-          }}
-        >
-          중복체크
-        </OverlapBtn>
-      </StDiv>
-      {username.length > 0 && (
-        <span
-          style={{ color: isUserName ? "var(--color-point-blue)" : "#f85032" }}
-          className={`message ${isUserName ? "success" : "error"}`}
-        >
-          {usernameMsg}
-        </span>
-      )}
+      <div
+        style={{
+          position: "relative",
+        }}
+      >
+        <StDiv>
+          <IdInput
+            type="text"
+            placeholder="아이디를 입력해주세요."
+            onChange={onChangeUserName}
+            // disabled={isUserName}
+          />
+          <OverlapBtn
+            type="button"
+            onClick={() => {
+              onUserNameCheck();
+            }}
+          >
+            중복체크
+          </OverlapBtn>
+        </StDiv>
+        {username.length > 0 && (
+          <span
+            style={{
+              color: isUserName ? "var(--color-point-blue)" : "#f85032",
+              position: "absolute",
+            }}
+            className={`message ${isUserName ? "success" : "error"}`}
+          >
+            {usernameMsg}
+          </span>
+        )}
+      </div>
       <StDiv>
         <StInput
           type="text"

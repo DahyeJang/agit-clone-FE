@@ -9,14 +9,25 @@ import { AiOutlineEllipsis } from "react-icons/ai";
 import Button from "../elem/Button";
 import ModalMenu from "./ModalMenu";
 import ModalMenuComment from "./ModalMenuComment";
-import { __postComment } from "../../redux/modules/agitInfoSlice";
+import {
+  __getAgitPost,
+  __postComment,
+  __deleteComment,
+  __modifyComment,
+} from "../../redux/modules/agitInfoSlice";
+import Comment from "./PostListModal";
 
 const CreateAgitForm = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const postList = useSelector((state) => state.agitInfoSlice.data.postList);
-  console.log("postList", postList);
+  //console.log("postList", postList);
+
+  // const ccc = useSelector(
+  //   (state) => state.agitInfoSlice.data.postList.commentList
+  // );
+  // console.log(ccc);
 
   const createAgitBtn = () => {
     navigate("/");
@@ -25,9 +36,12 @@ const CreateAgitForm = () => {
   const [show, setShow] = useState(false);
   const [showComment, setShowComment] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
+  const [isEditMode, setIsEditMode] = useState(false);
 
   const [text, setText] = useState("");
   const [textComment, setTextComment] = useState("");
+
+  const [commentId, setCommentId] = useState("");
 
   //댓글 추가
   const onChangeInputHandler = (e) => {
@@ -37,8 +51,15 @@ const CreateAgitForm = () => {
 
   const onClickPostHandler = (id) => {
     dispatch(__postComment({ content: text, id: id }));
-    // console.log("id", id);
+    //console.log("id", id);
     setText("");
+    window.location.reload();
+  };
+
+  //댓글 수정
+  const onClickCommentModifyToggle = (id) => {
+    setIsEditMode(true);
+    setModalOpen(false);
   };
 
   const onClickCancel = () => {
@@ -54,6 +75,41 @@ const CreateAgitForm = () => {
   const onClickCommentCancel = () => {
     setShowComment(false);
     setTextComment("");
+    setIsEditMode(false);
+  };
+
+  const onClickCommentDelete = (commentId, postId) => {
+    //console.log("commentId", commentId);
+    //console.log("postId", postId);
+    dispatch(__deleteComment({ postId: postId, commentId: commentId }));
+    window.location.reload();
+  };
+
+  const ModalHandler = (id) => {
+    //console.log(postList.commentList.id);
+    // filter
+    // if (id === parseInt(postList.commentList.id)) {
+    //   setModalOpen(true);
+    // } else {
+    //   setModalOpen(false);
+    // }
+    setCommentId(id);
+    {
+      modalOpen ? setModalOpen(false) : setModalOpen(true);
+    }
+    setIsEditMode(false);
+  };
+
+  const onClickCommentModify = (commentId, postId) => {
+    dispatch(
+      __modifyComment({
+        postId: postId,
+        commentId: commentId,
+        content: textComment,
+      })
+    );
+    //dispatch(__getAgitPost(postId));
+    window.location.reload();
   };
 
   return (
@@ -110,45 +166,96 @@ const CreateAgitForm = () => {
               </FormButton>
             )}
           </MainDiv>
+
+          {/* 댓글 표시되는 부분 */}
           {post.commentList?.map((comment) => (
+            // <Comment comment={comment} post={post} />
             <>
-              <MMainDiv>
-                <SuvDiv>
-                  <PPhoto src={basicImg} />
-                  <InDiv>
-                    <NNick>{comment.nickname}</NNick>
-                    <DateDiv>{comment.createdAt}</DateDiv>
-                  </InDiv>
-                </SuvDiv>
-                <CContent>{comment.content}</CContent>
-                <EtcBtn
-                  type="button"
-                  rol="tab"
-                  aria-controls="postModal"
-                  aria-expanded="true"
-                >
-                  <AiOutlineEllipsis />
-                </EtcBtn>
-                <ModalMenuComment />
-                <BtnDiv>
+              <MMainDiv key={comment.id}>
+                <>
+                  <SuvDiv>
+                    <PPhoto src={basicImg} />
+                    <InDiv>
+                      <NNick>{comment.nickname}</NNick>
+                      <DateDiv>{comment.createdAt}</DateDiv>
+                    </InDiv>
+                  </SuvDiv>
+                  {isEditMode && comment.id === commentId ? (
+                    <>
+                      {comment.id === commentId && (
+                        <>
+                          <BtnDiv>
+                            <CmtInput
+                              placeholder={comment.content}
+                              onChange={onChangeInputCommentHandler}
+                              value={textComment}
+                            ></CmtInput>
+                          </BtnDiv>
+                          <FormButton2>
+                            <Button onClick={onClickCommentCancel}>취소</Button>
+                            <Button
+                              borderColor="rgba(88, 132, 224, 0.2)"
+                              backgroundColor="var(--color-point-blue)"
+                              color="white"
+                              onClick={() => {
+                                onClickCommentModify(comment.id, post.id);
+                              }}
+                            >
+                              수정하기
+                            </Button>
+                          </FormButton2>
+                        </>
+                      )}
+                    </>
+                  ) : (
+                    <CContent>{comment.content}</CContent>
+                  )}
+                  <EtcBtn
+                    onClick={() => {
+                      ModalHandler(comment.id);
+                    }}
+                  >
+                    <AiOutlineEllipsis />
+                  </EtcBtn>
+                  {modalOpen && comment.id === commentId && (
+                    <ModalMenuFrame>
+                      <li
+                        onClick={() => {
+                          onClickCommentModifyToggle();
+                        }}
+                      >
+                        수정하기
+                      </li>
+                      <li
+                        onClick={() => {
+                          onClickCommentDelete(comment.id, post.id);
+                        }}
+                      >
+                        삭제하기
+                      </li>
+                    </ModalMenuFrame>
+                  )}
+
+                  {/* <BtnDiv>
                   <CmtInput
                     placeholder="댓글을 입력해주세요."
                     onChange={onChangeInputCommentHandler}
                     value={textComment}
                   ></CmtInput>
-                </BtnDiv>
-                {showComment && (
-                  <FormButton2>
-                    <Button onClick={onClickCommentCancel}>취소</Button>
-                    <Button
-                      borderColor="rgba(88, 132, 224, 0.2)"
-                      backgroundColor="var(--color-point-blue)"
-                      color="white"
-                    >
-                      작성하기
-                    </Button>
-                  </FormButton2>
-                )}
+                </BtnDiv> */}
+                  {/* {showComment && (
+                    <FormButton2>
+                      <Button onClick={onClickCommentCancel}>취소</Button>
+                      <Button
+                        borderColor="rgba(88, 132, 224, 0.2)"
+                        backgroundColor="var(--color-point-blue)"
+                        color="white"
+                      >
+                        작성하기
+                      </Button>
+                    </FormButton2>
+                  )} */}
+                </>
               </MMainDiv>
             </>
           ))}
@@ -171,9 +278,10 @@ const MainDiv = styled.div`
 
 const MMainDiv = styled.div`
   //height: 198px;
+  position: relative;
   width: 723px;
   border: 1px solid #e2e2e2;
-  padding: 0px 20px 50px 0px;
+  padding: 0px 20px 30px 0px;
   background-color: #fafbfc;
   display: inline-block;
 `;
@@ -332,6 +440,7 @@ const EtcBtn = styled.button`
   width: 26px;
   height: 23px;
   float: right;
+  cursor: pointer;
 `;
 
 const PostInput = styled.input`
@@ -377,5 +486,43 @@ const FormButton2 = styled.div`
     &:first-child {
       margin-right: 5px;
     }
+  }
+`;
+
+//모달창 관련
+const ModalMenuFrame = styled.div`
+  bottom: -50px;
+  right: 20px;
+  position: absolute;
+  z-index: 10;
+  min-width: 118px;
+  width: auto;
+  border: 1px solid #d0d0d0;
+  border-radius: 2px;
+  background-color: #fff;
+  li {
+    height: 32px;
+    border-bottom: 1px solid #dcdfe4;
+    display: block;
+    width: 100%;
+    height: 100%;
+    padding: 0 10px;
+    font-size: 12px;
+    line-height: 33px;
+    color: #222;
+    text-align: left;
+    white-space: nowrap;
+    cursor: pointer;
+  }
+  button {
+    /* display: block;
+    width: 100%;
+    height: 100%;
+    padding: 0 10px;
+    font-size: 12px;
+    line-height: 33px;
+    color: #222;
+    text-align: left;
+    white-space: nowrap; */
   }
 `;

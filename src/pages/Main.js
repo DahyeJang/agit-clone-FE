@@ -20,27 +20,34 @@ const Main = () => {
 
   const userInfoGetData = useSelector((state) => state.userInfoGet);
 
-  useEffect(() => {
-    const myInfo = async () => {
-      try {
-        const data = await baseURL.get(`/user`);
-        //console.log("data.data.data", data.data.data);
-        setIsLogin(data.data.data);
-      } catch (error) {
-        //console.log(error);
-        setIsLogin(false);
-      }
-    };
-    myInfo();
-
-    if (userInfoGetData.agitList.length !== 0) {
-      setHaveAgit(true); //오류생김. 0인데 왜 true?
+  useEffect(async () => {
+    try {
+      const data = await baseURL.get(`/user`);
+      //console.log("data.data.data", data.data.data);
+      setIsLogin(data.data.data);
+    } catch (error) {
+      //console.log(error);
+      setIsLogin(false);
     }
+
+    // myInfo();
+
+    // if (userInfoGetData.agitList.length !== 0) {
+    //   setHaveAgit(true); //오류생김. 0인데 왜 true?
+    // }
   }, []);
+
+  useEffect(() => {
+    if (userInfoGetData.agitList.length !== 0) {
+      //console.log(userInfoGetData.agitList);
+      setHaveAgit(true); //오류생김. 0인데 왜 true? > 기본값이 빈객체 , 1[{}]
+    }
+    //console.log("userInfoGetData", userInfoGetData.agitList);
+  }, [userInfoGetData]);
 
   //const { userInfo, agitList } = userInfoGetData;
 
-  console.log("isHaveAgit", userInfoGetData.agitList.length);
+  //console.log("isHaveAgit", userInfoGetData.agitList.length);
 
   // useEffect(() => {
   //   //이게 되는 것임!

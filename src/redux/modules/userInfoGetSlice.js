@@ -4,7 +4,7 @@ import { instance, baseURL } from "../../core/api/axios";
 const initialState = {
   data: [{}],
   userInfo: [],
-  agitList: [{}],
+  agitList: [],
 };
 
 //유저 가져오기
