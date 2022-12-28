@@ -26,7 +26,6 @@ const PostList = () => {
   const [show, setShow] = useState(false);
   const [showComment, setShowComment] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
-  console.log(postList);
   const [text, setText] = useState("");
   const [textComment, setTextComment] = useState("");
 
@@ -47,11 +46,16 @@ const PostList = () => {
 
   const [commentId, setCommentId] = useState("");
 
+  const [inputpostId, setInputPostId] = useState("");
+
   //댓글 추가
 
-  const onChangeInputHandler = (e) => {
+  const onChangeInputHandler = (e, id) => {
     setText(e.target.value);
+    setInputPostId(id);
     setShow(true);
+    //console.log("e", e);
+    //console.log("id", id);
   };
 
   const onClickPostHandler = (id) => {
@@ -91,13 +95,6 @@ const PostList = () => {
   };
 
   const ModalHandler = (id) => {
-    //console.log(postList.commentList.id);
-    // filter
-    // if (id === parseInt(postList.commentList.id)) {
-    //   setModalOpen(true);
-    // } else {
-    //   setModalOpen(false);
-    // }
     setCommentId(id);
     {
       modalOpen ? setModalOpen(false) : setModalOpen(true);
@@ -194,7 +191,7 @@ const PostList = () => {
               <EtcBtn type="button">
                 <AiOutlineEllipsis />
               </EtcBtn>
-              <ModalMenuFrame id="postModal">
+              <ModalMenuFrame2>
                 <li>수정하기</li>
                 <li
                   type="button"
@@ -204,14 +201,16 @@ const PostList = () => {
                 >
                   삭제하기
                 </li>
-              </ModalMenuFrame>
+              </ModalMenuFrame2>
             </BtnDiv>
             <PostInput
               placeholder="댓글을 입력해주세요."
-              onChange={onChangeInputHandler}
+              onChange={(e) => {
+                onChangeInputHandler(e, post.id);
+              }}
               value={text}
             ></PostInput>
-            {show && (
+            {show && inputpostId === post.id && (
               <FormButton>
                 <Button onClick={onClickCancel}>취소</Button>
                 <Button
@@ -238,7 +237,16 @@ const PostList = () => {
                     <PPhoto src={basicImg} />
                     <InDiv>
                       <NNick>{comment.nickname}</NNick>
-                      <DateDiv>{comment.createdAt}</DateDiv>
+                      <DateDiv>
+                        {comment.createdAt.slice(0, 10) +
+                          "  " +
+                          comment.createdAt.slice(11, 13) +
+                          "시" +
+                          "  " +
+                          comment.createdAt.slice(14, 16) +
+                          "분"}
+                      </DateDiv>
+                      {comment.modified ? <Modify>수정됨</Modify> : ""}
                     </InDiv>
                   </SuvDiv>
                   {isEditMode && comment.id === commentId ? (
@@ -575,8 +583,22 @@ const ModalMenuFrame = styled.div`
     white-space: nowrap;
     cursor: pointer;
   }
-  button {
-    /* display: block;
+`;
+
+const ModalMenuFrame2 = styled.div`
+  bottom: 10px;
+  right: 20px;
+  position: absolute;
+  z-index: 10;
+  min-width: 118px;
+  width: auto;
+  border: 1px solid #d0d0d0;
+  border-radius: 2px;
+  background-color: #fff;
+  li {
+    height: 32px;
+    border-bottom: 1px solid #dcdfe4;
+    display: block;
     width: 100%;
     height: 100%;
     padding: 0 10px;
@@ -584,6 +606,7 @@ const ModalMenuFrame = styled.div`
     line-height: 33px;
     color: #222;
     text-align: left;
-    white-space: nowrap; */
+    white-space: nowrap;
+    cursor: pointer;
   }
 `;
