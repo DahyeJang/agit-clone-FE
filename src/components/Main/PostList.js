@@ -8,6 +8,7 @@ import { BsHandThumbsUp, BsHandThumbsDown } from "react-icons/bs";
 import { AiOutlineEllipsis } from "react-icons/ai";
 import Button from "../elem/Button";
 import ModalMenu from "./ModalMenu";
+import ModalMenuComment from "./ModalMenuComment";
 
 const CreateAgitForm = () => {
   const navigate = useNavigate();
@@ -75,6 +76,7 @@ const CreateAgitForm = () => {
               <EtcBtn type="button">
                 <AiOutlineEllipsis />
               </EtcBtn>
+              <ModalMenu />
             </BtnDiv>
             <PostInput
               placeholder="댓글을 입력해주세요."
@@ -113,7 +115,7 @@ const CreateAgitForm = () => {
                 >
                   <AiOutlineEllipsis />
                 </EtcBtn>
-                <ModalMenu />
+                <ModalMenuComment />
                 <BtnDiv>
                   <CmtInput
                     placeholder="댓글을 입력해주세요."
