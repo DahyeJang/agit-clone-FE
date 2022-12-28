@@ -40,7 +40,7 @@ const Main = () => {
 
   //const { userInfo, agitList } = userInfoGetData;
 
-  //console.log("isHaveAgit", userInfoGetData.agitList.length);
+  console.log("isHaveAgit", userInfoGetData.agitList.length);
 
   // useEffect(() => {
   //   //이게 되는 것임!

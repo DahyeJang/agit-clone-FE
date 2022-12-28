@@ -18,6 +18,7 @@ const Input = (props) => {
       padding={props.padding}
       height={props.height}
       onChange={props.onChange}
+      placeholder={props.placeholder}
     >
       {props.children}
     </StInput>

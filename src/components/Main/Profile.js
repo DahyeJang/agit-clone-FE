@@ -27,6 +27,7 @@ const Profile = () => {
     } else {
       removeCookie("Authorization", { path: "/" });
       setIsLogin(false);
+      window.location.reload();
     }
   };
 
