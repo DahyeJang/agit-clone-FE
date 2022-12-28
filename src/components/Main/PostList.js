@@ -25,7 +25,7 @@ const PostList = () => {
   const [hate, setHate] = useState(false);
   const [show, setShow] = useState(false);
   const [showComment, setShowComment] = useState(false);
-  const [modalOpen, setModalOpen] = useState(false);
+
   const [text, setText] = useState("");
   const [textComment, setTextComment] = useState("");
 
@@ -47,6 +47,10 @@ const PostList = () => {
   const [commentId, setCommentId] = useState("");
 
   const [inputpostId, setInputPostId] = useState("");
+
+  const [modalOpen, setModalOpen] = useState(false);
+
+  const [postModalOpen, setPostModalOpen] = useState(false);
 
   //댓글 추가
 
@@ -100,6 +104,14 @@ const PostList = () => {
       modalOpen ? setModalOpen(false) : setModalOpen(true);
     }
     setIsEditMode(false);
+  };
+
+  const PostModalHandler = (id) => {
+    setInputPostId(id);
+    {
+      postModalOpen ? setPostModalOpen(false) : setPostModalOpen(true);
+    }
+    //setIsEditMode(false);
   };
 
   const onClickCommentModify = (commentId, postId) => {
@@ -188,20 +200,27 @@ const PostList = () => {
                 </HateBtn>
                 {post.hateCount}
               </div>
-              <EtcBtn type="button">
+              <EtcBtn
+                type="button"
+                onClick={() => {
+                  PostModalHandler(post.id);
+                }}
+              >
                 <AiOutlineEllipsis />
               </EtcBtn>
-              <ModalMenuFrame2>
-                <li>수정하기</li>
-                <li
-                  type="button"
-                  onClick={() => {
-                    onClickDelContent(post.id);
-                  }}
-                >
-                  삭제하기
-                </li>
-              </ModalMenuFrame2>
+              {postModalOpen && post.id === inputpostId && (
+                <ModalMenuFrame2>
+                  <li>수정하기</li>
+                  <li
+                    type="button"
+                    onClick={() => {
+                      onClickDelContent(post.id);
+                    }}
+                  >
+                    삭제하기
+                  </li>
+                </ModalMenuFrame2>
+              )}
             </BtnDiv>
             <PostInput
               placeholder="댓글을 입력해주세요."
@@ -337,6 +356,7 @@ export default PostList;
 
 const MainDiv = styled.div`
   //height: 222px;
+  position: relative;
   border: 1px solid #e2e2e2;
   padding: 0px 20px 30px;
   background-color: #fff;
