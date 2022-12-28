@@ -36,17 +36,6 @@ const ModalMenuFrame = styled.div`
     text-align: left;
     white-space: nowrap;
   }
-  button {
-    /* display: block;
-    width: 100%;
-    height: 100%;
-    padding: 0 10px;
-    font-size: 12px;
-    line-height: 33px;
-    color: #222;
-    text-align: left;
-    white-space: nowrap; */
-  }
 `;
 
 export default ModalMenu;

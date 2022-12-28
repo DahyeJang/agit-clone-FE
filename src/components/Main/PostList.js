@@ -9,11 +9,14 @@ import { AiOutlineEllipsis } from "react-icons/ai";
 import Button from "../elem/Button";
 import ModalMenu from "./ModalMenu";
 import ModalMenuComment from "./ModalMenuComment";
+import { __postComment } from "../../redux/modules/agitInfoSlice";
 
 const CreateAgitForm = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   const postList = useSelector((state) => state.agitInfoSlice.data.postList);
-  //console.log("agitInfo", agitInfo);
+  console.log("postList", postList);
 
   const createAgitBtn = () => {
     navigate("/");
@@ -26,9 +29,16 @@ const CreateAgitForm = () => {
   const [text, setText] = useState("");
   const [textComment, setTextComment] = useState("");
 
+  //댓글 추가
   const onChangeInputHandler = (e) => {
     setText(e.target.value);
     setShow(true);
+  };
+
+  const onClickPostHandler = (id) => {
+    dispatch(__postComment({ content: text, id: id }));
+    // console.log("id", id);
+    setText("");
   };
 
   const onClickCancel = () => {
@@ -57,6 +67,7 @@ const CreateAgitForm = () => {
               <InDiv>
                 <Nick>{post.nickname}</Nick>
                 <DateDiv>{post.createdAt}</DateDiv>
+                {post.modified ? <Modify>수정됨</Modify> : ""}
               </InDiv>
             </SuvDiv>
             <Content>{post.content}</Content>
@@ -90,6 +101,9 @@ const CreateAgitForm = () => {
                   borderColor="rgba(88, 132, 224, 0.2)"
                   backgroundColor="var(--color-point-blue)"
                   color="white"
+                  onClick={() => {
+                    onClickPostHandler(post.id);
+                  }}
                 >
                   작성하기
                 </Button>
@@ -219,9 +233,20 @@ const NNick = styled.div`
 `;
 
 const DateDiv = styled.div`
+  display: inline;
+
+  font-weight: 400;
+  font-size: 12px;
+  color: #979797;
+`;
+const Modify = styled.div`
+  display: inline;
+  font-weight: 400;
+  font-size: 12px;
+  color: #414141;
+  margin-left: 5px;
   font-weight: 400;
   font-size: 11px;
-  color: #979797;
 `;
 
 const Content = styled.div`
