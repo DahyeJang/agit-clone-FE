@@ -18,6 +18,7 @@ const CreateAgitForm = () => {
       dispatch(__postcreateagit({ agitName, agitInfo }));
       alert("아지트 생성 완료!");
       navigate("/");
+      window.location.reload();
     }
   };
 

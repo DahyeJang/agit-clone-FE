@@ -37,6 +37,7 @@ const LoginForm = () => {
         setCookies("Authorization", res.headers.authorization, { path: "/" });
         alert("로그인 완료!");
         navigate("/");
+        window.location.reload();
       }
     });
   };
