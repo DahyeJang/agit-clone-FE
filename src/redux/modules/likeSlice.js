@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { instance, baseURL } from "../../core/api/axios";
+import { baseURL } from "../../core/api/axios";
 
 const initialState = {
   like: [],
@@ -7,7 +7,7 @@ const initialState = {
   isLoading: false,
   error: null,
 };
-// 아지트 멤버 초대 경로 수정 필요
+
 export const __postlike = createAsyncThunk(
   "like",
   async (payload, thunkAPI) => {

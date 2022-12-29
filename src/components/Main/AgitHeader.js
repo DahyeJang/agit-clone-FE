@@ -1,10 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import styled from "styled-components";
-import { __getAgit } from "../../redux/modules/userInfoGetSlice";
 import {
-  __getAgitMember,
   __getAgitPost,
 } from "../../redux/modules/agitInfoSlice";
 
@@ -21,11 +19,6 @@ const AgitHeader = () => {
     const firstAgit = agitList[0].id;
     dispatch(__getAgitPost(firstAgit));
   }, []);
-
-  // useEffect(() => {
-  //   //dispatch(__getInfo(param));
-  //   dispatch(__getAgitMember(firstAgit));
-  // }, [dispatch]);
 
   return (
     <>

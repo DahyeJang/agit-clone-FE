@@ -1,14 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
-import { __postinvite } from "../../redux/modules/inviteSlice";
 import { __postInvite } from "../../redux/modules/agitInfoSlice";
 import Button from "../elem/Button";
 import Input from "../elem/Input";
 
 const Invite = () => {
-  const navigate = useNavigate();
 
   const [username, setUsername] = useState("");
   const [disabled, setDisabled] = useState(false);
@@ -24,10 +22,11 @@ const Invite = () => {
     setBackgroundColor("var(--color-point-blue)");
   };
 
-  const onInviteBtn = (e) => {
-    e.preventDefault();
+  const onInviteBtn = () => {
     dispatch(__postInvite({ username, agitId }));
-    navigate("/");
+    setTimeout(() => {
+      window.location.reload()
+    }, 50)  
   };
 
   return (

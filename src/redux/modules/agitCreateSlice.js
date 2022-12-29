@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { instance, baseURL } from "../../core/api/axios";
+import { baseURL } from "../../core/api/axios";
 
 const initialState = {
   createagit: [],

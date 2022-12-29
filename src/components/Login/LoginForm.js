@@ -20,8 +20,7 @@ const LoginForm = () => {
     } catch (error) {}
   };  
 
-  const onSubmitHandler = (e) => {
-    // e.preventDefault();
+  const onSubmitHandler = () => {
     if (username === "" || password === "") {
       alert("아이디, 비밀번호를 확인해주세요.");
     } else {
@@ -36,7 +35,6 @@ const LoginForm = () => {
         setCookies("Authorization", res.headers.authorization, { path: "/" });
         alert("로그인 완료!");
         navigate("/");
-        // window.location.reload();
       }
     });
   };
@@ -73,7 +71,7 @@ const LoginForm = () => {
               onSubmitHandler(e);
             }}
           >
-            다음
+            로그인
           </EndButton>
           <EndButton
             onClick={() => {
