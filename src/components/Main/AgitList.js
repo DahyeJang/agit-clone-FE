@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { TfiArrowCircleUp } from "react-icons/tfi";
-
 import styled from "styled-components";
 import { __getAgit } from "../../redux/modules/userInfoGetSlice";
 import {
@@ -19,7 +17,6 @@ const AgitList = () => {
   }, []);
 
   const myAgitList = useSelector((state) => state.userInfoGet.agitList);
-  const state = useSelector((state) => state);
 
   useEffect(() => {
     if (myAgitList.length === 0) {
@@ -108,19 +105,9 @@ const AgitList = () => {
 
 const StAgitList = styled.div`
   margin-top: 10px;
-  //border: 1px solid #dcdfe4;
   border-bottom: 1px solid #e9e9e9;
   border-radius: 2px;
   padding: 10px 10px 22px 24px;
-
-  /* display: flex; */
-  //justify-content: center;
-  //align-items: flex-start;
-  //align-content: center;
-  /* flex-direction: column;
-  height: auto; */
-  //overflow: auto;
-  //float: none;
 `;
 
 const StSubject = styled.p`

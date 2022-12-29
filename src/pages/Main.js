@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
-import { baseURL, instance } from "../core/api/axios";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { baseURL } from "../core/api/axios";
 
 import styled from "styled-components";
 import Button from "../components/elem/Button";
@@ -11,7 +11,6 @@ import Invite from "../components/Main/Invite";
 import PostList from "../components/Main/PostList";
 import AgitList from "../components/Main/AgitList";
 import AgitHeader from "../components/Main/AgitHeader";
-//import { AiOutlinePlus } from "react-icons/ai";
 
 const Main = () => {
   const navigate = useNavigate();
@@ -27,50 +26,14 @@ const Main = () => {
     } catch (error) {
       setIsLogin(false);
     }
-
-    // myInfo();
-
-    // if (userInfoGetData.agitList.length !== 0) {
-    //   setHaveAgit(true); //오류생김. 0인데 왜 true?
-    // }
   }, []);
 
   useEffect(() => {
     if (userInfoGetData.agitList.length !== 0) {
-      //console.log(userInfoGetData.agitList);
       setHaveAgit(true); //오류생김. 0인데 왜 true? > 기본값이 빈객체 , 1[{}]
     }
-    //console.log("userInfoGetData", userInfoGetData.agitList);
+
   }, [userInfoGetData]);
-
-  //const { userInfo, agitList } = userInfoGetData;
-
-  //console.log("isHaveAgit", userInfoGetData.agitList.length);
-
-  // useEffect(() => {
-  //   //이게 되는 것임!
-  //   if (userInfoGetData.userInfo.length !== undefined) {
-  //     setIsLogin(true);
-  //   }
-
-  //   //모달 만들기 위해
-  //   // if (userInfoGetData.userInfo !== null) {
-  //   //   setIsLogin(true);
-  //   // }
-
-  //   if (userInfoGetData.agitList.length !== 0) {
-  //     setHaveAgit(true);
-  //   }
-  //   // switch (userInfoGetData) {
-  //   //   case userInfoGetData.userInfo !== null:
-  //   //     setIsLogin(true);
-  //   //   case userInfoGetData.agitList.length !== 0:
-  //   //     setHaveAgit(true);
-  //   //     break;
-  //   // }
-  // }, []);
-
-  //console.log("isHaveAgit", isHaveAgit);
 
   return (
     <>
@@ -85,11 +48,7 @@ const Main = () => {
             navigate("/createagit");
             window.location.reload();
           }}
-          // display="flex"
-          // justifyContent="space-around"
-          // gap="10px"
         >
-          {/* <AiOutlinePlus /> */}
           새로운 아지트 만들기
         </Button>
         <Invite />

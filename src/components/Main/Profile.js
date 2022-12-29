@@ -3,23 +3,16 @@ import styled from "styled-components";
 import Button from "../elem/Button";
 import basicImg from "../../img/basicImg.png";
 import { CiLogout } from "react-icons/ci";
-import { useDispatch, useSelector } from "react-redux";
-import { __getUser } from "../../redux/modules/userInfoGetSlice";
-import { useNavigate, useParams } from "react-router-dom";
-import { baseURL, instance } from "../../core/api/axios";
+import { useNavigate } from "react-router-dom";
+import { baseURL } from "../../core/api/axios";
 import { useCookies } from "react-cookie";
 import { getCookies } from "../../core/api/cookieControler";
 
 const Profile = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
   const [isLogin, setIsLogin] = useState(false);
   const [cookie, setCookie, removeCookie] = useCookies();
   const token = getCookies("Authorization");
-  // useEffect(() => {
-  //   //dispatch(__getInfo(param));
-  //   dispatch(__getUser());
-  // }, []);
 
   const logOut = () => {
     if (!window.confirm("로그아웃 하시겠습니까?")) {
@@ -40,7 +33,6 @@ const Profile = () => {
       }
   }, []);
 
-  //const userInfoGet = useSelector((state) => state.userInfoGet.userInfo);
 
   return (
     <>
@@ -118,11 +110,8 @@ const StLogin = styled.div`
 `;
 
 const SuvDiv = styled.div`
-  //position: relative;
   display: flex;
-  //clear: both;
   padding-top: 15px;
-  //justify-content: flex-start;
 `;
 
 const Photo = styled.img`
@@ -154,7 +143,6 @@ const Nick = styled.div`
 const DateDiv = styled.div`
   font-weight: 400;
   font-size: 13px;
-  /* color: #979797; */
 `;
 
 export default Profile;

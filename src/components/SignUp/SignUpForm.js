@@ -88,8 +88,7 @@ const SignUpForm = () => {
     [password]
   );
 
-  const onUserNameCheck = (e) => {
-    // e.preventDefault();
+  const onUserNameCheck = () => {
     if (username.length === 0) {
       alert("아이디를 입력해주세요.");
       return;
@@ -131,7 +130,6 @@ const SignUpForm = () => {
             type="text"
             placeholder="아이디를 입력해주세요."
             onChange={onChangeUserName}
-            // disabled={isUserName}
           />
           <OverlapBtn
             type="button"
@@ -164,7 +162,6 @@ const SignUpForm = () => {
             type="text"
             placeholder="닉네임을 입력해주세요."
             onChange={onChangeNickName}
-            // disabled={isNickName}
           />
         </StDivv>
         {nickname.length > 1 && (

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
@@ -10,15 +10,12 @@ import Button from "../elem/Button";
 
 import { __delContent } from "../../redux/modules/contentsSlice";
 import { __posthate, __postlike } from "../../redux/modules/likeSlice";
-import { __getAgit } from "../../redux/modules/userInfoGetSlice";
 import {
-  __getAgitPost,
   __postComment,
   __deleteComment,
   __modifyComment,
   __modifyPost,
 } from "../../redux/modules/agitInfoSlice";
-import { baseURL } from "../../core/api/axios";
 
 const PostList = () => {
   const dispatch = useDispatch();
@@ -32,18 +29,10 @@ const PostList = () => {
   const [textComment, setTextComment] = useState("");
   const [textPost, setTextPost] = useState("");
 
-  const navigate = useNavigate();
-  // const [posts, setPosts] = useState(postList);
   const [isEditMode, setIsEditMode] = useState(false);
-
   const [commentId, setCommentId] = useState("");
-  // console.log("posts", posts)
-  // const lc = useSelector((state) => state.likeSlice.like?.data?.likeCount)
-  // console.log(lc)
-  // const hc = useSelector((state)=> state.likeSlice.hate?.data?.hateCount)
-  // console.log(hc)
-  // //댓글 추가
-
+  const lc = useSelector((state) => state.likeSlice.like?.data?.likeCount)
+  const hc = useSelector((state)=> state.likeSlice.hate?.data?.hateCount)
 
   const [isPostEditMode, setIsPostEditMode] = useState(false);
 
@@ -51,14 +40,10 @@ const PostList = () => {
 
   const [postModalOpen, setPostModalOpen] = useState(false);
 
-  //댓글 추가
-
   const onChangeInputHandler = (e, id) => {
     setText(e.target.value);
     setInputPostId(id);
     setShow(true);
-    //console.log("e", e);
-    //console.log("id", id);
   };
 
   const onClickPostHandler = (id) => {
@@ -135,7 +120,6 @@ const PostList = () => {
         content: textComment,
       })
     );
-    //dispatch(__getAgitPost(postId));
     window.location.reload();
   };
 
@@ -146,29 +130,34 @@ const PostList = () => {
         content: textPost,
       })
     );
-    //dispatch(__getAgitPost(postId));
     window.location.reload();
   };
 
   const onClickDelContent = (id) => {
     dispatch(__delContent(id));
+    window.location.reload();
   };
 
   const onClickLike = (a, c) => {
     dispatch(__postlike(a));
+    setTimeout(() => {
+      window.location.reload()
+    }, 10)
     if (c === null) {
       setLike(false);
       setHate(false);
-      
+
     } else if (c === true) {
       setLike(true);
       setHate(false);
-      
     }
   };
 
-  const onClickHate = (a, c, e) => {
+  const onClickHate = (a, c) => {
     dispatch(__posthate(a));
+    setTimeout(() => {
+      window.location.reload()
+    }, 10)
     if (c === null) {
       setLike(false);
       setHate(false);
@@ -179,6 +168,10 @@ const PostList = () => {
       
     }
   };
+
+  
+    
+
 
   return (
     <>
@@ -240,14 +233,14 @@ const PostList = () => {
                     >
                       <BsHandThumbsUp />
                     </LikeBtn>
-                    {post.likeCount}
+                    <span>{post.likeCount}</span>
                     <HateBtn
                       type="button"
                       onClick={() => onClickHate(post.id, post.postLike)}
                     >
                       <BsHandThumbsDown />
                     </HateBtn>
-                    {post.hateCount}
+                    <span>{post.hateCount}</span>
                   </div>
                   <EtcBtn
                     type="button"
@@ -305,7 +298,6 @@ const PostList = () => {
 
           {/* 댓글 표시되는 부분 */}
           {[...post.commentList]?.reverse().map((comment) => (
-            // <Comment comment={comment} post={post} />
             <>
               <MMainDiv key={comment.id}>
                 <>
@@ -380,26 +372,6 @@ const PostList = () => {
                       </li>
                     </ModalMenuFrame>
                   )}
-
-                  {/* <BtnDiv>
-                  <CmtInput
-                    placeholder="댓글을 입력해주세요."
-                    onChange={onChangeInputCommentHandler}
-                    value={textComment}
-                  ></CmtInput>
-                </BtnDiv> */}
-                  {/* {showComment && (
-                    <FormButton2>
-                      <Button onClick={onClickCommentCancel}>취소</Button>
-                      <Button
-                        borderColor="rgba(88, 132, 224, 0.2)"
-                        backgroundColor="var(--color-point-blue)"
-                        color="white"
-                      >
-                        작성하기
-                      </Button>
-                    </FormButton2>
-                  )} */}
                 </>
               </MMainDiv>
             </>
@@ -419,7 +391,6 @@ const Textarea = styled.textarea`
 `;
 
 const MainDiv = styled.div`
-  //height: 222px;
   position: relative;
   border: 1px solid #e2e2e2;
   padding: 0px 20px 30px;
@@ -429,7 +400,6 @@ const MainDiv = styled.div`
 `;
 
 const MMainDiv = styled.div`
-  //height: 198px;
   position: relative;
   width: 723px;
   border: 1px solid #e2e2e2;
@@ -520,8 +490,6 @@ const Content = styled.div`
 `;
 
 const CContent = styled.div`
-  //width: 678px;
-  //padding-top: 10px;
   padding-left: 60px;
   margin-bottom: 0;
   font-size: 13px;
@@ -531,11 +499,8 @@ const CContent = styled.div`
 `;
 
 const BtnDiv = styled.div`
-  //width: 720px;
   height: 24px;
   display: flex;
-  //position: relative;
-  //clear: both;
   margin-top: 25px;
   padding-left: 10px;
   justify-content: space-between;
@@ -587,7 +552,6 @@ const EtcBtn = styled.button`
   background-color: white;
   color: #5c5c5c;
   margin-top: 0.3px;
-  //margin-left: 575px;
   border: 1px solid #e0e0e0;
   border-radius: 2px;
   width: 26px;
@@ -599,12 +563,8 @@ const EtcBtn = styled.button`
 const PostInput = styled.input`
   width: 687px;
   margin: 20px 0px 10px 10px;
-  //padding-right: -10px;
-  //margin-bottom: 30px;
   height: 27px;
   color: #333333;
-  //padding: 0px 0px 0px 15px;
-  //margin-left: 50px;
   border: 1px solid #e0e0e0;
 `;
 
@@ -613,7 +573,6 @@ const CmtInput = styled.input`
   height: 27px;
   color: #333333;
   padding: 0px 0px 0px 15px;
-  //margin-left: 50px;
   border: 1px solid #e0e0e0;
   margin: 20px 0px 10px 50px;
 `;

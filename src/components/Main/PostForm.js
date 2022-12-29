@@ -27,6 +27,7 @@ const PostForm = () => {
 
   const onClickPostContents = (id) => {
     dispatch(__postcontents({ content: enableButton, agitId: id }));
+    window.location.reload();
   };
 
   return (

@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { baseURL, instance } from "../../core/api/axios";
+import { baseURL } from "../../core/api/axios";
 
 const initialState = {
   data: {
@@ -64,12 +64,10 @@ export const __getAgitPost = createAsyncThunk(
 export const __modifyPost = createAsyncThunk(
   "agitInfo/__modifyPost",
   async (payload, thunkAPI) => {
-    console.log("payload", payload);
     const { postId, content } = payload;
     const postcontent = { content: content };
     try {
       const data = await baseURL.put(`/agit/post/${postId}`, postcontent);
-      //console.log("data", data);
       return thunkAPI.fulfillWithValue(data.data.data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -173,13 +171,9 @@ export const agitInfoSlice = createSlice({
       state.isLoading = true;
     },
     [__postInvite.fulfilled]: (state, action) => {
-      const newMember = action.meta.arg.username;
-      //state.agitMember = [...state.agitMember, newMember];
       state.isLoading = false;
       state.member = action.payload;
       alert(action.payload.msg);
-      //state.statusCode = action.payload.statusCode;
-      //state.msg = action.payload.msg;
     },
     [__postInvite.rejected]: (state, action) => {
       state.isLoading = false;
@@ -193,7 +187,6 @@ export const agitInfoSlice = createSlice({
     [__postComment.fulfilled]: (state, action) => {
       state.isLoading = false;
       state.data = action.payload;
-      //state.data.postList.commentList = [...newComment];
     },
     [__postComment.rejected]: (state, action) => {
       state.isLoading = false;
@@ -205,9 +198,6 @@ export const agitInfoSlice = createSlice({
     },
     [__deleteComment.fulfilled]: (state, action) => {
       state.isLoading = false;
-      //const { newComment } = action.payload;
-      //console.log("aaa", state.data.postList.commentList);
-      //state.data.postList.commentList = [...newComment];
     },
     [__deleteComment.rejected]: (state, action) => {
       state.isLoading = false;
@@ -232,7 +222,6 @@ export const agitInfoSlice = createSlice({
     },
     [__modifyPost.fulfilled]: (state, action) => {
       state.isLoading = false;
-      //console.log("state", state);
     },
     [__modifyPost.rejected]: (state, action) => {
       state.isLoading = false;
