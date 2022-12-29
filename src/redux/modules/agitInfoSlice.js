@@ -37,10 +37,8 @@ const initialState = {
 export const __getAgitMember = createAsyncThunk(
   "agitInfo/getAgitMember",
   async (payload, thunkAPI) => {
-    console.log("payload", payload);
     try {
       const data = await baseURL.get(`/agit/${payload}/member`);
-      //console.log("data", data);
       return thunkAPI.fulfillWithValue(data.data.data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -53,10 +51,8 @@ export const __getAgitPost = createAsyncThunk(
   "agitInfo/__getAgitPost",
 
   async (payload, thunkAPI) => {
-    console.log("payload", payload);
     try {
       const data = await baseURL.get(`/agit/${payload}`);
-      console.log("data", data);
       return thunkAPI.fulfillWithValue(data.data.data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -68,12 +64,10 @@ export const __getAgitPost = createAsyncThunk(
 export const __postComment = createAsyncThunk(
   "agitInfo/__postComment",
   async (payload, thunkAPI) => {
-    //console.log("payload", payload);
     const { id, content } = payload;
     const postComment = { content: content };
     try {
       const data = await baseURL.post(`/post/${id}/comment`, postComment);
-      //console.log("data", data.data.data);
       return thunkAPI.fulfillWithValue(data.data.data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -85,11 +79,9 @@ export const __postComment = createAsyncThunk(
 export const __deleteComment = createAsyncThunk(
   "agitInfo/__deleteComment",
   async (payload, thunkAPI) => {
-    //console.log("payload", payload);
     const { postId, commentId } = payload;
     try {
       const data = await baseURL.delete(`/post/${postId}/comment/${commentId}`);
-      //console.log("data", data);
       return thunkAPI.fulfillWithValue(data.data.data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -103,14 +95,11 @@ export const __modifyComment = createAsyncThunk(
   async (payload, thunkAPI) => {
     const { postId, commentId, content } = payload;
     const modifyComment = { content: content };
-    //console.log("modifyComment", modifyComment);
-
     try {
       const data = await baseURL.put(
         `/post/${postId}/comment/${commentId}`,
         modifyComment
       );
-      //console.log("data", data);
       return thunkAPI.fulfillWithValue(data.data.data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -122,13 +111,10 @@ export const __modifyComment = createAsyncThunk(
 export const __postInvite = createAsyncThunk(
   "inviteagit/post",
   async (payload, thunkAPI) => {
-    //console.log(payload);
     const { agitId, username } = payload;
     const aaa = { username: username };
-    //console.log("enableButton", enableButton);
     try {
       const data = await baseURL.post(`/agit/${agitId}/join`, aaa);
-      console.log("data", data);
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
       return thunkAPI.rejectWithValue("error");
@@ -146,7 +132,6 @@ export const agitInfoSlice = createSlice({
       state.isLoading = true;
     },
     [__getAgitMember.fulfilled]: (state, action) => {
-      //console.log("tagArr", tagArr);
       state.isLoading = false;
       state.agitMember = action.payload;
     },
@@ -171,7 +156,6 @@ export const agitInfoSlice = createSlice({
       state.isLoading = true;
     },
     [__postInvite.fulfilled]: (state, action) => {
-      console.log(state.agitMember);
       const newMember = action.meta.arg.username;
       //state.agitMember = [...state.agitMember, newMember];
       state.isLoading = false;
@@ -192,7 +176,6 @@ export const agitInfoSlice = createSlice({
     [__postComment.fulfilled]: (state, action) => {
       state.isLoading = false;
       const { newComment } = action.payload;
-      console.log("aaa", state.data.postList.commentList);
       //state.data.postList.commentList = [...newComment];
     },
     [__postComment.rejected]: (state, action) => {
@@ -220,7 +203,6 @@ export const agitInfoSlice = createSlice({
     },
     [__modifyComment.fulfilled]: (state, action) => {
       state.isLoading = false;
-      //console.log("state", state);
     },
     [__modifyComment.rejected]: (state, action) => {
       state.isLoading = false;

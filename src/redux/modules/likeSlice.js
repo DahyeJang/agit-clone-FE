@@ -11,7 +11,6 @@ const initialState = {
 export const __postlike = createAsyncThunk(
   "like",
   async (payload, thunkAPI) => {
-    console.log(payload);
     try {
       const data = await baseURL.post(`/post/${payload}/like`);
       return thunkAPI.fulfillWithValue(data.data);
@@ -24,7 +23,6 @@ export const __postlike = createAsyncThunk(
 export const __posthate = createAsyncThunk(
   "hate",
   async (payload, thunkAPI) => {
-    console.log(payload);
     try {
       const data = await baseURL.post(`/post/${payload}/hate`);
       return thunkAPI.fulfillWithValue(data.data);
@@ -44,7 +42,7 @@ const likeSlice = createSlice({
     });
     builder.addCase(__postlike.fulfilled, (state, action) => {
       state.isLoading = false;
-      state.like = action.payload;
+      state.like = action.payload; 
     });
     builder.addCase(__postlike.rejected, (state, action) => {
       state.isLoading = false;
@@ -55,7 +53,7 @@ const likeSlice = createSlice({
     });
     builder.addCase(__posthate.fulfilled, (state, action) => {
       state.isLoading = false;
-      state.hate = action.payload;
+      state.hate = action.payload; 
     });
     builder.addCase(__posthate.rejected, (state, action) => {
       state.isLoading = false;

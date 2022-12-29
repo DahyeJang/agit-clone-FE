@@ -10,13 +10,10 @@ const initialState = {
 export const __postinvite = createAsyncThunk(
   "inviteagit/post",
   async (payload, thunkAPI) => {
-    //console.log(payload);
     const { agitId, username } = payload;
     const aaa = { username: username };
-    //console.log("enableButton", enableButton);
     try {
       const data = await baseURL.post(`/agit/${agitId}/join`, aaa);
-      //console.log("data", data);
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
       return thunkAPI.rejectWithValue("error");
@@ -35,7 +32,6 @@ const inviteSlice = createSlice({
     builder.addCase(__postinvite.fulfilled, (state, action) => {
       state.isLoading = false;
       state.invite = action.payload;
-      //console.log("state.invite", state.invite);
     });
     builder.addCase(__postinvite.rejected, (state, action) => {
       state.isLoading = false;

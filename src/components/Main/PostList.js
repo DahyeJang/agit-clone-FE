@@ -17,6 +17,7 @@ import {
   __deleteComment,
   __modifyComment,
 } from "../../redux/modules/agitInfoSlice";
+import { baseURL } from "../../core/api/axios";
 
 const PostList = () => {
   const dispatch = useDispatch();
@@ -26,28 +27,19 @@ const PostList = () => {
   const [show, setShow] = useState(false);
   const [showComment, setShowComment] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
-  console.log(postList);
   const [text, setText] = useState("");
   const [textComment, setTextComment] = useState("");
-
+  console.log(postList)
   const navigate = useNavigate();
-
-  //console.log("postList", postList);
-
-  // const ccc = useSelector(
-  //   (state) => state.agitInfoSlice.data.postList.commentList
-  // );
-  // console.log(ccc);
-
-  const createAgitBtn = () => {
-    navigate("/");
-  };
-
+  // const [posts, setPosts] = useState(postList);
   const [isEditMode, setIsEditMode] = useState(false);
-
   const [commentId, setCommentId] = useState("");
-
-  //댓글 추가
+  // console.log("posts", posts)
+  // const lc = useSelector((state) => state.likeSlice.like?.data?.likeCount)
+  // console.log(lc)
+  // const hc = useSelector((state)=> state.likeSlice.hate?.data?.hateCount)
+  // console.log(hc)
+  // //댓글 추가
 
   const onChangeInputHandler = (e) => {
     setText(e.target.value);
@@ -56,7 +48,6 @@ const PostList = () => {
 
   const onClickPostHandler = (id) => {
     dispatch(__postComment({ content: text, id: id }));
-    //console.log("id", id);
     setText("");
     window.location.reload();
   };
@@ -84,20 +75,11 @@ const PostList = () => {
   };
 
   const onClickCommentDelete = (commentId, postId) => {
-    //console.log("commentId", commentId);
-    //console.log("postId", postId);
     dispatch(__deleteComment({ postId, commentId }));
     window.location.reload();
   };
 
   const ModalHandler = (id) => {
-    //console.log(postList.commentList.id);
-    // filter
-    // if (id === parseInt(postList.commentList.id)) {
-    //   setModalOpen(true);
-    // } else {
-    //   setModalOpen(false);
-    // }
     setCommentId(id);
     {
       modalOpen ? setModalOpen(false) : setModalOpen(true);
@@ -126,26 +108,26 @@ const PostList = () => {
     if (c === null) {
       setLike(false);
       setHate(false);
+      
     } else if (c === true) {
       setLike(true);
       setHate(false);
+      
     }
   };
 
-  const onClickHate = (a, c) => {
+  const onClickHate = (a, c, e) => {
     dispatch(__posthate(a));
     if (c === null) {
       setLike(false);
       setHate(false);
+      
     } else if (c === false) {
       setLike(false);
       setHate(true);
+      
     }
   };
-
-  useEffect(() => {
-    dispatch(__getAgit());
-  }, [dispatch]);
 
   return (
     <>
@@ -189,7 +171,7 @@ const PostList = () => {
                 >
                   <BsHandThumbsDown />
                 </HateBtn>
-                {post.hateCount}
+                  {post.hateCount}
               </div>
               <EtcBtn type="button">
                 <AiOutlineEllipsis />

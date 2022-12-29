@@ -5,18 +5,16 @@ import { baseURL, instance } from "../../core/api/axios";
 const Header = () => {
   const [isMine, setIsMine] = useState(false);
 
-  useEffect(async () => {
+  const abc = async () => {
     try {
       const data = await baseURL.get(`/user`);
-      //console.log("data.data.data", data.data.data);
       setIsMine(data.data.data); //타입에러
     } catch (error) {
-      //console.log(error);
       setIsMine(false);
     }
-  }, []);
+  }
 
-  console.log(isMine);
+  useEffect(() => abc(), []);
 
   return (
     <MainTitle>

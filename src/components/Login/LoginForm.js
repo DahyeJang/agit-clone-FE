@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { baseURL, instance } from "../../core/api/axios";
@@ -18,10 +18,10 @@ const LoginForm = () => {
         alert("아이디, 비밀번호를 확인해주세요.");
       }
     } catch (error) {}
-  };
+  };  
 
   const onSubmitHandler = (e) => {
-    e.preventDefault();
+    // e.preventDefault();
     if (username === "" || password === "") {
       alert("아이디, 비밀번호를 확인해주세요.");
     } else {
@@ -30,14 +30,13 @@ const LoginForm = () => {
       username,
       password,
     }).then((res) => {
-      console.log(res);
       if (res === undefined) {
         navigate("/login");
       } else {
         setCookies("Authorization", res.headers.authorization, { path: "/" });
         alert("로그인 완료!");
         navigate("/");
-        window.location.reload();
+        // window.location.reload();
       }
     });
   };

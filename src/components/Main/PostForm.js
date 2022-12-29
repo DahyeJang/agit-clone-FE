@@ -18,7 +18,6 @@ const PostForm = () => {
   }, []);
   
   const agitInfo = useSelector((state) => state.agitInfoSlice.data);
-  console.log("agitInfo", agitInfo.postList);
 
   const onChangeInputHandler = (e) => {
     setEnableButton(e.target.value);
