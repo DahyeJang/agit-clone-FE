@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import { baseURL, instance } from "../../src/core/api/axios";
+import { baseURL, instance } from "../core/api/axios";
 
 import styled from "styled-components";
 import Button from "../components/elem/Button";
@@ -23,10 +23,8 @@ const Main = () => {
   useEffect(async () => {
     try {
       const data = await baseURL.get(`/user`);
-      //console.log("data.data.data", data.data.data);
       setIsLogin(data.data.data);
     } catch (error) {
-      //console.log(error);
       setIsLogin(false);
     }
 
@@ -84,7 +82,8 @@ const Main = () => {
           backgroundColor="var(--color-point-blue)"
           color="#fff"
           onClick={() => {
-            navigate("createagit");
+            navigate("/createagit");
+            window.location.reload();
           }}
           // display="flex"
           // justifyContent="space-around"

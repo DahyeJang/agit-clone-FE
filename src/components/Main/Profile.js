@@ -31,23 +31,16 @@ const Profile = () => {
     }
   };
 
-  useEffect(() => {
-    const myInfo = async () => {
+  useEffect(async() => {
       try {
         const data = await baseURL.get(`/user`);
-        //console.log("data.data.data", data.data.data);
         setIsLogin(data.data.data);
       } catch (error) {
-        //console.log(error);
         setIsLogin(false);
       }
-    };
-    myInfo();
   }, []);
 
   //const userInfoGet = useSelector((state) => state.userInfoGet.userInfo);
-
-  //console.log(setIsLogin);
 
   return (
     <>
@@ -58,14 +51,16 @@ const Profile = () => {
               backgroundColor="var(--color-point-blue)"
               color="#fff"
               onClick={() => {
-                navigate("login");
+                navigate("/login");
+                window.location.reload();
               }}
             >
               로그인
             </Button>
             <Button
               onClick={() => {
-                navigate("signup");
+                navigate("/signup");
+                window.location.reload();
               }}
             >
               회원가입

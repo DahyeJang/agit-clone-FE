@@ -18,6 +18,7 @@ import {
   __modifyComment,
   __modifyPost,
 } from "../../redux/modules/agitInfoSlice";
+import { baseURL } from "../../core/api/axios";
 
 const PostList = () => {
   const dispatch = useDispatch();
@@ -26,33 +27,27 @@ const PostList = () => {
   const [hate, setHate] = useState(false);
   const [show, setShow] = useState(false);
   const [showComment, setShowComment] = useState(false);
-
+  const [modalOpen, setModalOpen] = useState(false);
   const [text, setText] = useState("");
   const [textComment, setTextComment] = useState("");
   const [textPost, setTextPost] = useState("");
 
   const navigate = useNavigate();
-
-  //console.log("postList", postList);
-
-  // const ccc = useSelector(
-  //   (state) => state.agitInfoSlice.data.postList.commentList
-  // );
-  // console.log(ccc);
-
-  const createAgitBtn = () => {
-    navigate("/");
-  };
-
+  // const [posts, setPosts] = useState(postList);
   const [isEditMode, setIsEditMode] = useState(false);
+
+  const [commentId, setCommentId] = useState("");
+  // console.log("posts", posts)
+  // const lc = useSelector((state) => state.likeSlice.like?.data?.likeCount)
+  // console.log(lc)
+  // const hc = useSelector((state)=> state.likeSlice.hate?.data?.hateCount)
+  // console.log(hc)
+  // //댓글 추가
+
 
   const [isPostEditMode, setIsPostEditMode] = useState(false);
 
-  const [commentId, setCommentId] = useState("");
-
   const [inputpostId, setInputPostId] = useState("");
-
-  const [modalOpen, setModalOpen] = useState(false);
 
   const [postModalOpen, setPostModalOpen] = useState(false);
 
@@ -68,7 +63,6 @@ const PostList = () => {
 
   const onClickPostHandler = (id) => {
     dispatch(__postComment({ content: text, id: id }));
-    //console.log("id", id);
     setText("");
     window.location.reload();
   };
@@ -113,8 +107,6 @@ const PostList = () => {
   };
 
   const onClickCommentDelete = (commentId, postId) => {
-    //console.log("commentId", commentId);
-    //console.log("postId", postId);
     dispatch(__deleteComment({ postId, commentId }));
     window.location.reload();
   };
@@ -167,26 +159,26 @@ const PostList = () => {
     if (c === null) {
       setLike(false);
       setHate(false);
+      
     } else if (c === true) {
       setLike(true);
       setHate(false);
+      
     }
   };
 
-  const onClickHate = (a, c) => {
+  const onClickHate = (a, c, e) => {
     dispatch(__posthate(a));
     if (c === null) {
       setLike(false);
       setHate(false);
+      
     } else if (c === false) {
       setLike(false);
       setHate(true);
+      
     }
   };
-
-  useEffect(() => {
-    dispatch(__getAgit());
-  }, [dispatch]);
 
   return (
     <>
@@ -287,7 +279,6 @@ const PostList = () => {
                 </BtnDiv>
               </>
             )}
-
             <PostInput
               placeholder="댓글을 입력해주세요."
               onChange={(e) => {

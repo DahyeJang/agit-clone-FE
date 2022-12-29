@@ -15,14 +15,11 @@ const AgitList = () => {
   const [memberOpen, setMemberOpen] = useState(false);
 
   useEffect(() => {
-    //dispatch(__getInfo(param));
     dispatch(__getAgit());
   }, []);
 
   const myAgitList = useSelector((state) => state.userInfoGet.agitList);
   const state = useSelector((state) => state);
-
-  //console.log("myAgitList", myAgitList);
 
   useEffect(() => {
     if (myAgitList.length === 0) {
@@ -30,11 +27,9 @@ const AgitList = () => {
     }
     const firstAgit = myAgitList[0].id;
     dispatch(__getAgitMember(firstAgit));
-    //console.log(agitList[0].id);
   }, [myAgitList]);
 
   const memberList = useSelector((state) => state.agitInfoSlice.agitMember);
-  console.log("memberList", memberList);
 
   const openListHandler = () => {
     {
@@ -47,8 +42,6 @@ const AgitList = () => {
       memberOpen ? setMemberOpen(false) : setMemberOpen(true);
     }
   };
-
-  //console.log(listOpen);
 
   return (
     <>

@@ -17,7 +17,6 @@ const Invite = () => {
   );
   const dispatch = useDispatch("");
   const agitId = useSelector((state) => state.agitInfoSlice.data.agitId);
-  //console.log("agitId", agitId);
 
   const onChangeInputHandler = (e) => {
     setUsername(e.target.value);
@@ -25,16 +24,11 @@ const Invite = () => {
     setBackgroundColor("var(--color-point-blue)");
   };
 
-  //console.log(enableButton);
   const onInviteBtn = (e) => {
     e.preventDefault();
     dispatch(__postInvite({ username, agitId }));
-    //navigate("/");
-    window.location.reload();
+    navigate("/");
   };
-
-  // const state = useSelector((state) => state);
-  // console.log("state", state);
 
   return (
     <>

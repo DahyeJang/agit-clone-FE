@@ -15,7 +15,6 @@ import {
 } from "../../redux/modules/agitInfoSlice";
 
 const Comment = (props) => {
-  console.log("props", props);
   const [comment, post] = props;
 
   const dispatch = useDispatch();
@@ -32,8 +31,6 @@ const Comment = (props) => {
   };
 
   const onClickCommentDelete = (commentId, postId) => {
-    //console.log("commentId", commentId);
-    //console.log("postId", postId);
     dispatch(__deleteComment({ postId: postId, commentId: commentId }));
     window.location.reload();
   };

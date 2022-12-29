@@ -10,11 +10,9 @@ const initialState = {
 export const __postcontents = createAsyncThunk(
   "contents/post",
   async (payload, thunkAPI) => {
-    console.log("payload", payload)
     const agitId = payload.agitId
     try {
       const data = await baseURL.post(`/agit/${agitId}/post`, payload);
-      console.log(data)
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
       return thunkAPI.rejectWithValue("error");
@@ -25,11 +23,9 @@ export const __postcontents = createAsyncThunk(
 export const __delContent = createAsyncThunk(
   "contents/delete",
   async (payload, thunkAPI) => {
-    console.log("payload", payload)
     const agitId = payload
     try {
       const data = await baseURL.delete(`/agit/post/${agitId}`);
-      console.log(data)
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
       return thunkAPI.rejectWithValue("error");

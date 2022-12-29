@@ -12,11 +12,7 @@ const AgitHeader = () => {
   const dispatch = useDispatch();
 
   const agitInfo = useSelector((state) => state.agitInfoSlice.data);
-  // console.log("agitInfo", agitInfo)
-
   const agitList = useSelector((state) => state.userInfoGet.agitList);
-
-  // console.log("agitList", agitList);
 
   useEffect(() => {
     if (agitList.length === 0) {

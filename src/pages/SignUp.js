@@ -5,9 +5,9 @@ import SignUpForm from "../components/SignUp/SignUpForm";
 const SignUp = () => {
   return (
     <StDiv>
-      <SignUpForm/>
+      <SignUpForm />
     </StDiv>
-    )
+  );
 };
 
 const StDiv = styled.div`

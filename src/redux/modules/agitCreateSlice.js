@@ -10,7 +10,6 @@ const initialState = {
 export const __postcreateagit = createAsyncThunk(
   "createagit",
   async (payload, thunkAPI) => {
-    //console.log(payload);
     try {
       const data = await baseURL.post("/agit", payload);
       return thunkAPI.fulfillWithValue(data.data);
