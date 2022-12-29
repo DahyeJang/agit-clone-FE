@@ -60,6 +60,23 @@ export const __getAgitPost = createAsyncThunk(
   }
 );
 
+//아지트 포스트 수정하기
+export const __modifyPost = createAsyncThunk(
+  "agitInfo/__modifyPost",
+  async (payload, thunkAPI) => {
+    console.log("payload", payload);
+    const { postId, content } = payload;
+    const postcontent = { content: content };
+    try {
+      const data = await baseURL.put(`/agit/post/${postId}`, postcontent);
+      //console.log("data", data);
+      return thunkAPI.fulfillWithValue(data.data.data);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
 //아지트 댓글 쓰기
 export const __postComment = createAsyncThunk(
   "agitInfo/__postComment",
@@ -175,7 +192,7 @@ export const agitInfoSlice = createSlice({
     },
     [__postComment.fulfilled]: (state, action) => {
       state.isLoading = false;
-      const { newComment } = action.payload;
+      state.data = action.payload;
       //state.data.postList.commentList = [...newComment];
     },
     [__postComment.rejected]: (state, action) => {
@@ -205,6 +222,19 @@ export const agitInfoSlice = createSlice({
       state.isLoading = false;
     },
     [__modifyComment.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload;
+      alert(action.payload.msg);
+    },
+    //포스트 내용 수정하기
+    [__modifyPost.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [__modifyPost.fulfilled]: (state, action) => {
+      state.isLoading = false;
+      //console.log("state", state);
+    },
+    [__modifyPost.rejected]: (state, action) => {
       state.isLoading = false;
       state.error = action.payload;
       alert(action.payload.msg);

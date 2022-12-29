@@ -55,6 +55,7 @@ const AgitList = () => {
             }
             alt="Hicon"
             onClick={openListHandler}
+            cursor="pointer"
           ></HIcon>
           내 아지트 목록
         </StSubject>
@@ -85,6 +86,7 @@ const AgitList = () => {
             }
             alt="Hicon"
             onClick={openMemberHandler}
+            cursor="pointer"
           ></HIcon>
           아지트 멤버 목록
         </StSubject>
@@ -132,12 +134,16 @@ const Stlist = styled.ul`
   color: #808080;
   display: contents;
   cursor: pointer;
+  li:hover {
+    background-color: #ececec;
+  }
 `;
 
 const HIcon = styled.img`
   width: 16px;
   margin-left: -17px;
   padding-right: 5px;
+  cursor: pointer;
 `;
 
 export default AgitList;
