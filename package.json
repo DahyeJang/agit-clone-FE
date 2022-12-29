@@ -13,6 +13,7 @@
     "react-dom": "^18.2.0",
     "react-helmet": "^6.1.0",
     "react-icons": "^4.7.1",
+    "react-intersection-observer": "^9.4.1",
     "react-redux": "^8.0.5",
     "react-router-dom": "^6.6.0",
     "react-scripts": "5.0.1",
@@ -23,8 +24,9 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject",
+    "deploy": "aws s3 sync ./build s3://agit-clone --profile=agit-clone"
   },
   "eslintConfig": {
     "extends": [
