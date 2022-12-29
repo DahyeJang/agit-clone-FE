@@ -19,6 +19,7 @@ import {
 
 const PostList = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const postList = useSelector((state) => state.agitInfoSlice.data.postList);
   const [like, setLike] = useState(false);
   const [hate, setHate] = useState(false);
@@ -138,40 +139,19 @@ const PostList = () => {
     window.location.reload();
   };
 
-  const onClickLike = (a, c) => {
+  const onClickLike = (a) => {
     dispatch(__postlike(a));
     setTimeout(() => {
       window.location.reload()
     }, 10)
-    if (c === null) {
-      setLike(false);
-      setHate(false);
-
-    } else if (c === true) {
-      setLike(true);
-      setHate(false);
-    }
   };
 
-  const onClickHate = (a, c) => {
+  const onClickHate = (a) => {
     dispatch(__posthate(a));
     setTimeout(() => {
-      window.location.reload()
+    window.location.reload()
     }, 10)
-    if (c === null) {
-      setLike(false);
-      setHate(false);
-      
-    } else if (c === false) {
-      setLike(false);
-      setHate(true);
-      
-    }
   };
-
-  
-    
-
 
   return (
     <>
@@ -229,18 +209,18 @@ const PostList = () => {
                     </MsgBtn>
                     <LikeBtn
                       type="button"
-                      onClick={() => onClickLike(post.id, post.postLike)}
+                      onClick={() => onClickLike(post.id)}
                     >
                       <BsHandThumbsUp />
                     </LikeBtn>
-                    <span>{post.likeCount}</span>
+                    {post.postLike ? <span>{post.likeCount}</span> : null}
                     <HateBtn
                       type="button"
-                      onClick={() => onClickHate(post.id, post.postLike)}
+                      onClick={() => onClickHate(post.id)}
                     >
                       <BsHandThumbsDown />
                     </HateBtn>
-                    <span>{post.hateCount}</span>
+                    {!post.postLike && post.postLike !== null ? <span>{post.hateCount}</span> : null}
                   </div>
                   <EtcBtn
                     type="button"
