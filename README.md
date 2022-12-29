@@ -3,8 +3,23 @@
 
 카카오에서 만든 팀 협업 툴인 agit를 클론코딩합니다. 잘 짜여진 레이아웃을 완성해보고, 미니프로젝트보다 좀 더 발전된 기능을 구현해봅니다.
 
+<br />
 
-### 구현 기능
+## 📺 실행화면
+
+<br />
+
+## 👤 팀원 소개
++ 장다혜 [DahyeJang](https://github.com/DahyeJang)
+
+<br />
+
+## ⏳ 팀 프로젝트 기간
++ 2022.12.23 ~ 2022.12.29
+
+<br />
+
+## 🔑 구현 기능
 
 - 회원가입
 - 로그인
@@ -22,7 +37,17 @@
     - 최신순 정렬
     - 메뉴 모달
 
-### API
+<br />
+
+## ⚙️ 기술 스택
++ HTML
++ CSS
++ JavaScript
++ React
+
+<br />
+
+## API
 
 <img width="730" alt="image" src="https://user-images.githubusercontent.com/105340850/209946211-0ac84e4a-f583-420b-8fb8-758ab037d943.png">
 
