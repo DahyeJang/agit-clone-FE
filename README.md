@@ -6,12 +6,23 @@
 <br />
 
 ## 📺 실행화면
+https://youtu.be/t9i-BzOiOQo
 
 <br />
 
 ## 👤 팀원 소개
+
+### FE
+
 + 장다혜 [DahyeJang](https://github.com/DahyeJang)
 + 이원문 [dnjsans](https://github.com/dnjsans)
+
+### BE
+
++ 김범준
++ 백지훈 
++ 박종범
++ 전재경
 
 <br />
 
